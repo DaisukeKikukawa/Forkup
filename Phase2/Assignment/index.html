@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ユーザー登録</title>
+</head>
+<body>
+  <header></header>
+  <main>
+    <h2>ユーザー登録</h2>
+    <p>以下のフォームに必要事項をご入力ください</p>
+    <form>
+      <fieldset>
+        <label for="name">お名前<span>*</span></label>
+        <input type="text" id="name" name="name" required>
+      </fieldset>
+      <fieldset>
+        <label for="email">メールアドレス<span>*</span></label>
+        <input type="email" id="email" name="email" required>
+      </fieldset>
+      <fieldset>
+        <label for="password">パスワード<span>*</span></label>
+        <input type="password" id="password" name="password" required>
+      </fieldset>
+      <fieldset>
+        <label for="birthdate">生年月日</label>
+        <input type="date" id="birthdate" name="birthdate">
+      </fieldset>
+      <fieldset>
+        <legend>性別</legend>
+        <input type="radio" id="male" name="male" value="male">
+        <label for="male">男性</label>
+        <input type="radio" id="female" name="female" value="female">
+        <label for="female">女性</label>
+      </fieldset>
+      <fieldset>
+        <legend>興味のある分野</legend>
+        <input type="checkbox" id="programming" name="programming">
+        <label for="programming">プログラミング</label>
+        <input type="checkbox" id="design" name="design">
+        <label for="design">デザイン</label>
+        <input type="checkbox" id="business" name="business">
+        <label for="business">ビジネス</label>
+        <input type="checkbox" id="marketing" name="marketing">
+        <label for="marketing">マーケティング</label>
+      </fieldset>
+      <fieldset>
+        <label for="country">移住国</label>
+        <select id="country" name="country">
+          <option value="">選択してください</option>
+          <option value="japan">日本</option>
+          <option value="usa">アメリカ</option>
+          <option value="uk">イギリス</option>
+        </select>
+      </fieldset>
+      <fieldset>
+        <label for="self-introduction">自己紹介</label>
+        <textarea id="self-introduction" name="self-introduction"></textarea>
+      </fieldset>
+      <button type="submit">送信</button>
+      <button type="reset">リセット</button>
+    </form>
+  </main>
+  <footer></footer>
+</body>
+</html>
