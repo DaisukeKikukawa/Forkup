@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ユーザー登録</title>
 </head>
+
 <body>
-  <header></header>
+  <header>
+  </header>
   <main>
     <h2>ユーザー登録</h2>
     <p>以下のフォームに必要事項をご入力ください</p>
     <form>
       <fieldset>
-        <label for="name">お名前<span>*</span></label>
+        <label for="name">お名前
+          <span>*</span>
+        </label>
         <input type="text" id="name" name="name" minlength="2" maxlength="30" placeholder="例: 山田 太郎" autofocus required>
       </fieldset>
       <fieldset>
-        <label for="email">メールアドレス<span>*</span></label>
+        <label for="email">メールアドレス
+          <span>*</span>
+        </label>
         <input type="email" id="email" name="email" minlength="8" autocomplete="on" required>
       </fieldset>
       <fieldset>
-        <label for="password">パスワード<span>*</span></label>
+        <label for="password">パスワード
+          <span>*</span>
+        </label>
         <input type="password" id="password" name="password" minlength="8" placeholder="8文字以上" required>
       </fieldset>
       <fieldset>
@@ -56,12 +65,15 @@
       </fieldset>
       <fieldset>
         <label for="self-introduction">自己紹介</label>
-        <textarea id="self-introduction" name="self-introduction"></textarea>
+        <textarea id="self-introduction" name="self-introduction">
+        </textarea>
       </fieldset>
       <button type="submit">送信</button>
       <button type="reset">リセット</button>
     </form>
   </main>
-  <footer></footer>
+  <footer>
+  </footer>
 </body>
+
 </html>
