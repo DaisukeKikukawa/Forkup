@@ -31,7 +31,7 @@ h2, p {
   font-weight: bold;
 }
 
-display-block-label, .legend {
+.display-block-label, .legend {
   display: block;
   color: #333333;
   font-weight: bold;
