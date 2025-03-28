@@ -45,6 +45,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="dat
   border-radius: 4px;
   outline-color: #9dbbff;
   vertical-align: middle;
+  box-sizing: border-box;
 }
 
 textarea {
