@@ -78,3 +78,23 @@ button[type="submit"] {
 button[type="reset"] {
   background-color: #888585;
 }
+/* ヘッダー */
+header {
+  position: sticky;
+  top: 0;
+  box-sizing: border-box;
+  height: 100px;
+  width: 100%;
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0px 40px;
+}
+
+ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
