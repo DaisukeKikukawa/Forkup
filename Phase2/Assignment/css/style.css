@@ -90,17 +90,21 @@ header {
   position: sticky;
   top: 0;
   box-sizing: border-box;
-  height: 100px;
   width: 100%;
   background-color: #FFFFFF;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  padding: 0px 40px;
+  padding: 20px 100px;
 }
 
-ul {
+header p {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+header ul {
   display: flex;
   list-style: none;
   gap: 30px;
