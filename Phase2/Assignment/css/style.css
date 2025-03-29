@@ -26,7 +26,7 @@ fieldset {
 }
 
 /* 入力フィールド*/
-h2, p {
+main h2, main p {
   text-align: center;
   margin: 0;
 }
