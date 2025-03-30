@@ -159,4 +159,20 @@ footer a {
 
 @media screen and (max-width: 768px) {
 
+  /* ヘッダー */
+  header {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  header p {
+    margin-bottom: 20px;
+  }
+
+  header ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+
 }
