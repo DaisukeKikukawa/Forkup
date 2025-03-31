@@ -166,6 +166,7 @@ footer a {
 
   /* ヘッダー */
   header {
+    position: static;
     flex-direction: column;
     padding: 20px;
   }
