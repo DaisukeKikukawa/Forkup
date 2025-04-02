@@ -44,6 +44,11 @@ main h2, main p {
   margin-bottom: 10px;
 }
 
+.form-group {
+  display: inline-block;
+  margin-right: 5px;
+}
+
 input[type="text"], input[type="email"], input[type="password"], input[type="date"], select, textarea {
   width: 100%;
   padding: 10px;
@@ -63,6 +68,7 @@ textarea {
   display: flex;
   justify-content: center;
   gap: 10px;
+  margin-top: 30px;
 }
 
 button {
@@ -70,7 +76,6 @@ button {
   width: 100px;
   height: 40px;
   border: none;
-  margin-top: 30px;
 }
 
 button:hover {
@@ -155,4 +160,61 @@ footer ul {
 footer a {
   text-decoration: none;
   color: white;
+}
+
+@media screen and (max-width: 768px) {
+
+  /* ヘッダー */
+  header {
+    position: static;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  header p {
+    margin-bottom: 20px;
+  }
+
+  header ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* 入力フィールド*/
+  .form-group {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  main {
+    width: 90%;
+    padding: 15px;
+  }
+
+  /* ボタン */
+  .button-area {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  /* フッター */
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 20px;
+  }
+
+  .about-company, .link-list, .contact-information {
+    align-items: center;
+  }
+
+  footer ul {
+    align-items: center;
+  }
+
 }
