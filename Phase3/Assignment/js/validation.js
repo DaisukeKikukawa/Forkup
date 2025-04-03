@@ -62,4 +62,24 @@ document.addEventListener("DOMContentLoaded", function() {
       passwordErrorMessage.textContent = "OK";
     }
   }
+  // リセットボタン
+  resetButton.addEventListener("click", function (event) {
+    if (confirm("入力内容をリセットしてよろしいですか？")) {
+      form.reset();
+
+      // バリデーションメッセージをクリア
+      nameErrorMessage.style.color = "red";
+      nameErrorMessage.textContent = "お名前を入力してください";
+      emailErrorMessage.style.color = "red";
+      emailErrorMessage.textContent = "メールアドレスを入力してください";
+      passwordErrorMessage.style.color = "red";
+      passwordErrorMessage.textContent =
+        "パスワードは8文字以上で入力してください";
+
+      // その他の国入力欄を非表示
+      otherCountryInputArea.classList.add("hidden");
+      console.log("フォームがリセットされました");
+    }
+  });
+
 })
