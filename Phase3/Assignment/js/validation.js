@@ -8,4 +8,15 @@ document.addEventListener("DOMContentLoaded", function() {
   const emailErrorMessage = document.getElementById("email-error-message");
   const passwordInput = document.getElementById("password");
   const passwordErrorMessage = document.getElementById("password-error-message");
+  // 名前のリアルタイムバリデーション
+  function validateName() {
+    const name = nameInput.value.trim();
+    if (name === "") {
+      nameErrorMessage.style.color = "red";
+      nameErrorMessage.textContent = "お名前を入力してください";
+    } else {
+      nameErrorMessage.style.color = "green";
+      nameErrorMessage.textContent = "OK";
+    }
+  }
 })
