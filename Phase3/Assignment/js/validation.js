@@ -19,4 +19,22 @@ document.addEventListener("DOMContentLoaded", function() {
       nameErrorMessage.textContent = "OK";
     }
   }
+
+  // メールアドレスのリアルタイムバリデーション
+  function validateEmail() {
+    const email = emailInput.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email === "") {
+      // emailErrorMessage.classList.add("validate-error-color");
+      emailErrorMessage.style.color = "red";
+      emailErrorMessage.textContent = "メールアドレスを入力してください";
+    } else if (!emailRegex.test(email)) {
+      // emailErrorMessage.classList.add("validate-error-color");
+      emailErrorMessage.style.color = "red";
+      emailErrorMessage.textContent = "有効なメールアドレスを入力してください";
+    } else {
+      emailErrorMessage.style.color = "green";
+      emailErrorMessage.textContent = "OK";
+    }
+  }
 })
