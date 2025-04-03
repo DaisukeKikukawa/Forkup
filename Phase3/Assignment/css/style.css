@@ -5,11 +5,28 @@
   padding: 0;
 }
 
+/* バリデーション関連 */
 .validation-message {
   display: block;
   font-size: 0.8rem;
   margin-top: 0.2rem;
   min-height: 1rem;
+}
+
+#otherCountryInputArea {
+  margin-top: 0.5rem;
+}
+
+#otherCountryInputArea .input-other-country {
+  width: 200px;
+}
+
+.other-country-label {
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
 }
 
 body {
