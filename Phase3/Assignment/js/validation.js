@@ -8,6 +8,17 @@ document.addEventListener("DOMContentLoaded", function() {
   const emailErrorMessage = document.getElementById("email-error-message");
   const passwordInput = document.getElementById("password");
   const passwordErrorMessage = document.getElementById("password-error-message");
+
+  // ページロード時にリアルタイムでバリデーションを実行
+  validateName();
+  validateEmail();
+  validatePassword();
+
+  // フォーム入力時にリアルタイムでバリデーションを実行
+  nameInput.addEventListener("input", validateName);
+  emailInput.addEventListener("input", validateEmail);
+  passwordInput.addEventListener("input", validatePassword);
+
   // 名前のリアルタイムバリデーション
   function validateName() {
     const name = nameInput.value.trim();
@@ -25,11 +36,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const email = emailInput.value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email === "") {
-      // emailErrorMessage.classList.add("validate-error-color");
       emailErrorMessage.style.color = "red";
       emailErrorMessage.textContent = "メールアドレスを入力してください";
     } else if (!emailRegex.test(email)) {
-      // emailErrorMessage.classList.add("validate-error-color");
       emailErrorMessage.style.color = "red";
       emailErrorMessage.textContent = "有効なメールアドレスを入力してください";
     } else {
