@@ -82,4 +82,49 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
+  // 登録ボタン
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    let isValid = true;
+
+    // ユーザー名のバリデーション
+    if (name === "") {
+      nameErrorMessage.style.color = "red";
+      nameErrorMessage.textContent = "お名前を入力してください";
+      isValid = false;
+    }
+
+    // メールアドレスのバリデーション
+    if (!emailRegex.test(email)) {
+      emailErrorMessage.style.color = "red";
+      emailErrorMessage.textContent = "有効なメールアドレスを入力してください";
+      isValid = false;
+    }
+
+    // パスワードのバリデーション
+    if (password.length < 8) {
+      passwordErrorMessage.style.color = "red";
+      passwordErrorMessage.textContent =
+        "パスワードは8文字以上で入力してください";
+      isValid = false;
+    }
+
+    // 全てのバリデーション通過時にデバッグ用コンソールログを出力
+    if (isValid) {
+      if (confirm(`名前：${name}\nメールアドレス：${email}`)) {
+        form.submit();
+        console.log("フォーム送信完了");
+        alert("送信が完了しました");
+        form.reset();
+      }
+      console.log(`名前：${name}`);
+      console.log(`メールアドレス：${email}`);
+      console.log(`パスワード：${password}`);
+    }
+  });
 })
