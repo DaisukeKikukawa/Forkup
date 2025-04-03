@@ -1,11 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
   // 興味のある分野（チェックボックス）関連の要素の取得
   const interestCheckboxes = document.querySelectorAll('[name="interest"]');
+
+  // 居住国選択（ドロップダウンリスト）関連の要素の取得
+  const countrySelect = document.getElementById("country");
+  const otherCountryInputArea = document.getElementById(
+    "otherCountryInputArea"
+  );
+
   // 興味のある分野（チェックボックス）の選択時にリアルタイムバリーでションを実行
   interestCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("input", function (event) {
       validateInterest(event);
     });
+  });
+
+  // 居住国選択（ドロップダウンリスト）の選択時にリアルタイムバリデーションを実行
+  countrySelect.addEventListener("change", function (event) {
+    validateCountry(event);
+    console.log(event.target.value);
   });
 
   // 興味のある分野（チェックボックス）のリアルタイムバリデーション
@@ -20,5 +33,15 @@ document.addEventListener("DOMContentLoaded", function () {
         event.target.checked = false;
       }
     });
+  }
+
+  // 居住国選択（ドロップダウンリスト）のリアルタイムバリデーション
+  function validateCountry(event) {
+    if (event.target.value === "other") {
+      console.log("その他の国が選択されました");
+      otherCountryInputArea.classList.remove("hidden");
+    } else {
+      otherCountryInputArea.classList.add("hidden");
+    }
   }
 });
