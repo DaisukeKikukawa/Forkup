@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // メールアドレスの正規表現
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // 入力フィールドの要素の取得
   const nameInput = document.getElementById("name");
   const nameErrorMessage = document.getElementById("name-error-message");
   const emailInput = document.getElementById("email");
@@ -37,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function() {
   // メールアドレスのリアルタイムバリデーション
   function validateEmail() {
     const email = emailInput.value.trim();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email === "") {
       emailErrorMessage.style.color = "red";
       emailErrorMessage.textContent = "メールアドレスを入力してください";
@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
       passwordErrorMessage.textContent = "OK";
     }
   }
+
   // リセットボタン
   resetButton.addEventListener("click", function (event) {
     if (confirm("入力内容をリセットしてよろしいですか？")) {
