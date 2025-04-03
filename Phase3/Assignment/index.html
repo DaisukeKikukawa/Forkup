@@ -26,17 +26,20 @@
         <label for="name" class="display-block-label required">お名前
         </label>
         <input type="text" id="name" name="name" minlength="2" maxlength="30" placeholder="山田 太郎" autofocus required>
+        <span id="name-error-message" class="validation-message"></span>
       </fieldset>
       <fieldset>
         <label for="email" class="display-block-label required">メールアドレス
         </label>
         <input type="email" id="email" name="email" minlength="8" placeholder="test@example.com" autocomplete="on"
           required>
+        <span id="email-error-message" class="validation-message"></span>
       </fieldset>
       <fieldset>
         <label for="password" class="display-block-label required">パスワード
         </label>
         <input type="password" id="password" name="password" minlength="8" placeholder="8文字以上" required>
+        <span id="password-error-message" class="validation-message"></span>
       </fieldset>
       <fieldset>
         <label for="birthdate" class="display-block-label">生年月日</label>
