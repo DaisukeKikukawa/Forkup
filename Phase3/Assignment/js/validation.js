@@ -37,4 +37,17 @@ document.addEventListener("DOMContentLoaded", function() {
       emailErrorMessage.textContent = "OK";
     }
   }
+
+  // パースワードのリアルタイムバリデーション
+  function validatePassword() {
+    const password = passwordInput.value.trim();
+    if (password.length < 8) {
+      passwordErrorMessage.style.color = "red";
+      passwordErrorMessage.textContent =
+        "パスワードは8文字以上で入力してください";
+    } else if (password.length >= 8) {
+      passwordErrorMessage.style.color = "green";
+      passwordErrorMessage.textContent = "OK";
+    }
+  }
 })
