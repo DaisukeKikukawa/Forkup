@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
-  // 入力フィールドの要素の取得
+  // form要素の取得
   const form = document.querySelector("form");
+  const resetButton = document.querySelector('button[type="reset"]');
+
   // メールアドレスの正規表現
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const nameInput = document.getElementById("name");
