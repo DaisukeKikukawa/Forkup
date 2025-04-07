@@ -1,67 +1,46 @@
-document.addEventListener("DOMContentLoaded", function() {
-  // form要素の取得
-  const form = document.querySelector("form");
-  const resetButton = document.querySelector('button[type="reset"]');
+// 名前のリアルタイムバリデーション
+function validateName(nameInput, nameErrorMessage) {
+  const name = nameInput.value.trim();
+  nameErrorMessage.classList.remove("message-valid", "message-invalid");
+  if (name === "") {
+    nameErrorMessage.classList.add("message-invalid");
+    nameErrorMessage.textContent = "お名前を入力してください";
+  } else {
+    nameErrorMessage.classList.add("message-valid");
+    nameErrorMessage.textContent = "OK";
+  }
+}
 
-  // メールアドレスの正規表現
+// メールアドレスのリアルタイムバリデーション
+function validateEmail(emailInput, emailErrorMessage) {
+  const email = emailInput.value.trim();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  // 入力フィールドの要素の取得
-  const nameInput = document.getElementById("name");
-  const nameErrorMessage = document.getElementById("name-error-message");
-  const emailInput = document.getElementById("email");
-  const emailErrorMessage = document.getElementById("email-error-message");
-  const passwordInput = document.getElementById("password");
-  const passwordErrorMessage = document.getElementById("password-error-message");
-
-  // ページロード時にリアルタイムでバリデーションを実行
-  validateName();
-  validateEmail();
-  validatePassword();
-
-  // フォーム入力時にリアルタイムでバリデーションを実行
-  nameInput.addEventListener("input", validateName);
-  emailInput.addEventListener("input", validateEmail);
-  passwordInput.addEventListener("input", validatePassword);
-
-  // 名前のリアルタイムバリデーション
-  function validateName() {
-    const name = nameInput.value.trim();
-    if (name === "") {
-      nameErrorMessage.style.color = "red";
-      nameErrorMessage.textContent = "お名前を入力してください";
-    } else {
-      nameErrorMessage.style.color = "green";
-      nameErrorMessage.textContent = "OK";
-    }
+  emailErrorMessage.classList.remove("message-valid", "message-invalid");
+  if (email === "") {
+    emailErrorMessage.classList.add("message-invalid");
+    emailErrorMessage.textContent = "メールアドレスを入力してください";
+  } else if (!emailRegex.test(email)) {
+    emailErrorMessage.classList.add("message-invalid");
+    emailErrorMessage.textContent = "有効なメールアドレスを入力してください";
+  } else {
+    emailErrorMessage.classList.add("message-valid");
+    emailErrorMessage.textContent = "OK";
   }
+}
 
-  // メールアドレスのリアルタイムバリデーション
-  function validateEmail() {
-    const email = emailInput.value.trim();
-    if (email === "") {
-      emailErrorMessage.style.color = "red";
-      emailErrorMessage.textContent = "メールアドレスを入力してください";
-    } else if (!emailRegex.test(email)) {
-      emailErrorMessage.style.color = "red";
-      emailErrorMessage.textContent = "有効なメールアドレスを入力してください";
-    } else {
-      emailErrorMessage.style.color = "green";
-      emailErrorMessage.textContent = "OK";
-    }
+// パースワードのリアルタイムバリデーション
+function validatePassword(passwordInput, passwordErrorMessage) {
+  const password = passwordInput.value.trim();
+  passwordErrorMessage.classList.remove("message-valid", "message-invalid");
+  if (password.length < 8) {
+    passwordErrorMessage.classList.add("message-invalid");
+    passwordErrorMessage.textContent =
+      "パスワードは8文字以上で入力してください";
+  } else {
+    passwordErrorMessage.classList.add("message-valid");
+    passwordErrorMessage.textContent = "OK";
   }
-
-  // パースワードのリアルタイムバリデーション
-  function validatePassword() {
-    const password = passwordInput.value.trim();
-    if (password.length < 8) {
-      passwordErrorMessage.style.color = "red";
-      passwordErrorMessage.textContent =
-        "パスワードは8文字以上で入力してください";
-    } else if (password.length >= 8) {
-      passwordErrorMessage.style.color = "green";
-      passwordErrorMessage.textContent = "OK";
-    }
-  }
+}
 
   // リセットボタン
   resetButton.addEventListener("click", function (event) {
@@ -128,4 +107,32 @@ document.addEventListener("DOMContentLoaded", function() {
       console.log(`パスワード：${password}`);
     }
   });
-})
+
+document.addEventListener("DOMContentLoaded", function () {
+  // 入力フィールドの要素の取得
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+
+  // 各エラーメッセージ要素を取得
+  const validationMessages = document.querySelectorAll(".validation-message");
+  const nameErrorMessage = Array.from(validationMessages).find((message) =>
+    message.classList.contains("name")
+  );
+  const emailErrorMessage = Array.from(validationMessages).find((message) =>
+    message.classList.contains("email")
+  );
+  const passwordErrorMessage = Array.from(validationMessages).find((message) =>
+    message.classList.contains("password")
+  );
+
+  // ページロード時にリアルタイムでバリデーションを実行
+  validateName(nameInput, nameErrorMessage);
+  validateEmail(emailInput, emailErrorMessage);
+  validatePassword(passwordInput, passwordErrorMessage);
+
+  // フォーム入力時にリアルタイムでバリデーションを実行
+  nameInput.addEventListener("input", validateName);
+  emailInput.addEventListener("input", validateEmail);
+  passwordInput.addEventListener("input", validatePassword);
+  });
