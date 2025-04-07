@@ -17,18 +17,13 @@ document.addEventListener("DOMContentLoaded", function () {
   countrySelect.addEventListener("change", validateCountry);
 
   // 興味のある分野（チェックボックス）のリアルタイムバリデーション
-  function validateInterest(event) {
-    let checkboxCheckedCount = 0;
-    interestCheckboxes.forEach((checkbox) => {
-      if (checkbox.checked) {
-        checkboxCheckedCount += 1;
-      }
-      if (checkboxCheckedCount >= 4) {
+    function validateInterest(event) {
+      const checkedCheckboxes = document.querySelectorAll('[name="interest"]:checked');
+      if (checkedCheckboxes.length >= 4) {
         alert("興味のある分野は最大3つまで選択できます");
         event.target.checked = false;
       }
-    });
-  }
+    }
 
   // 居住国選択（ドロップダウンリスト）のリアルタイムバリデーション
   function validateCountry(event) {
