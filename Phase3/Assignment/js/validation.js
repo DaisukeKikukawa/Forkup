@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
   // 入力フィールドの要素の取得
-  const form = document.querySelector("form");
-  const resetButton = document.getElementById("reset-button");
   const nameInput = document.getElementById("name");
   const nameErrorMessage = document.getElementById("name-error-message");
   const emailInput = document.getElementById("email");
