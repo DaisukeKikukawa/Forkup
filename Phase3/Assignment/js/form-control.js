@@ -27,11 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 居住国選択（ドロップダウンリスト）のリアルタイムバリデーション
   function validateCountry(event) {
-    if (event.target.value === "other") {
-      console.log("その他の国が選択されました");
-      otherCountryInputArea.classList.remove("hidden");
-    } else {
-      otherCountryInputArea.classList.add("hidden");
-    }
+    otherCountryInputArea.classList.toggle("hidden",event.target.value !== "other");
   }
 });
