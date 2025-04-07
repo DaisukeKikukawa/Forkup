@@ -20,11 +20,12 @@ document.addEventListener("DOMContentLoaded", function() {
   // 名前のリアルタイムバリデーション
   function validateName() {
     const name = nameInput.value.trim();
+    nameErrorMessage.classList.remove("message-valid", "message-invalid");
     if (name === "") {
-      nameErrorMessage.style.color = "red";
+      nameErrorMessage.classList.add("message-invalid");
       nameErrorMessage.textContent = "お名前を入力してください";
     } else {
-      nameErrorMessage.style.color = "green";
+      nameErrorMessage.classList.add("message-valid");
       nameErrorMessage.textContent = "OK";
     }
   }
@@ -33,14 +34,15 @@ document.addEventListener("DOMContentLoaded", function() {
   function validateEmail() {
     const email = emailInput.value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    emailErrorMessage.classList.remove("message-valid", "message-invalid");
     if (email === "") {
-      emailErrorMessage.style.color = "red";
+      emailErrorMessage.classList.add("message-invalid");
       emailErrorMessage.textContent = "メールアドレスを入力してください";
     } else if (!emailRegex.test(email)) {
-      emailErrorMessage.style.color = "red";
+      emailErrorMessage.classList.add("message-invalid");
       emailErrorMessage.textContent = "有効なメールアドレスを入力してください";
     } else {
-      emailErrorMessage.style.color = "green";
+      emailErrorMessage.classList.add("message-valid");
       emailErrorMessage.textContent = "OK";
     }
   }
@@ -48,12 +50,13 @@ document.addEventListener("DOMContentLoaded", function() {
   // パースワードのリアルタイムバリデーション
   function validatePassword() {
     const password = passwordInput.value.trim();
+    passwordErrorMessage.classList.remove("message-valid", "message-invalid");
     if (password.length < 8) {
-      passwordErrorMessage.style.color = "red";
+      passwordErrorMessage.classList.add("message-invalid");
       passwordErrorMessage.textContent =
         "パスワードは8文字以上で入力してください";
     } else {
-      passwordErrorMessage.style.color = "green";
+      passwordErrorMessage.classList.add("message-valid");
       passwordErrorMessage.textContent = "OK";
     }
   }

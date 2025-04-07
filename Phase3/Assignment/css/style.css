@@ -12,6 +12,14 @@
   min-height: 1rem;
 }
 
+.message-valid {
+  color: green;
+}
+
+.message-invalid {
+  color: red;
+}
+
 body {
   background-color: #f5f5f5;
 }
