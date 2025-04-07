@@ -14,10 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // 居住国選択（ドロップダウンリスト）の選択時にリアルタイムバリデーションを実行
-  countrySelect.addEventListener("change", function (event) {
-    validateCountry(event);
-    console.log(event.target.value);
-  });
+  countrySelect.addEventListener("change", validateCountry);
 
   // 興味のある分野（チェックボックス）のリアルタイムバリデーション
   function validateInterest(event) {
