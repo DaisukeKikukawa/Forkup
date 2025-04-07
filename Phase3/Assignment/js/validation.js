@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
   validatePassword(passwordInput, passwordErrorMessage);
 
   // フォーム入力時にリアルタイムでバリデーションを実行
-  nameInput.addEventListener("input", validateName);
-  emailInput.addEventListener("input", validateEmail);
-  passwordInput.addEventListener("input", validatePassword);
+  nameInput.addEventListener("input", () => validateName(nameInput, nameErrorMessage));
+  emailInput.addEventListener("input", () => validateEmail(emailInput, emailErrorMessage));
+  passwordInput.addEventListener("input", () => validatePassword(passwordInput, passwordErrorMessage));
   });
