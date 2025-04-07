@@ -10,9 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 興味のある分野（チェックボックス）の選択時にリアルタイムバリーでションを実行
   interestCheckboxes.forEach((checkbox) => {
-    checkbox.addEventListener("input", function (event) {
-      validateInterest(event);
-    });
+    checkbox.addEventListener("input", validateInterest);
   });
 
   // 居住国選択（ドロップダウンリスト）の選択時にリアルタイムバリデーションを実行
