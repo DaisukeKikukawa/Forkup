@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
       passwordErrorMessage.style.color = "red";
       passwordErrorMessage.textContent =
         "パスワードは8文字以上で入力してください";
-    } else if (password.length >= 8) {
+    } else {
       passwordErrorMessage.style.color = "green";
       passwordErrorMessage.textContent = "OK";
     }
