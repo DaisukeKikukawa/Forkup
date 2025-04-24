@@ -1,4 +1,4 @@
-// 2.条件分岐を使用した年齢チェックプログラム
+// 条件分岐を使用した年齢チェックプログラム
 function checkAge(age: number) {
   if (age < 13) {
     console.log("あなたは子供です。");

@@ -1,4 +1,4 @@
-//4.関数を使用した温度変換（摂氏⇔華氏）
+//関数を使用した温度変換（摂氏⇔華氏）
 
 // 摂氏から華氏へ変換
 function celsiusToFahrenheit(celsius: number): number {
