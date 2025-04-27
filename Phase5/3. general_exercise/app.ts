@@ -75,7 +75,6 @@ const showMenu = (): string => {
   console.log("");
   console.log("");
   console.log("=== メインメニュー ===");
-  console.log(students);
   menuOptions.forEach((menuOption) => {
     console.log(menuOption);
   });
