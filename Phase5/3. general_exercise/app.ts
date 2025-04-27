@@ -39,7 +39,7 @@ const validateStudentScore = (studentScore: number): boolean => {
   }
 };
 
-const convert_score_into_evaluation = (studentScore: number): string => {
+const convertScoreIntoEvaluation = (studentScore: number): string => {
   if (studentScore >= 90 && studentScore <= 100) {
     return "A";
   } else if (studentScore >= 80 && studentScore <= 89) {
