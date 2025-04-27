@@ -7,7 +7,7 @@ const menuOptions: string[] = [
   "4. 終了",
 ];
 
-let students: any[] = [];
+const students: any[] = [];
 
 const validateStudentInformation = (studentNumber: number): boolean => {
   if (studentNumber === 0) {
