@@ -82,7 +82,7 @@ const inputStudentInformation = () => {
   }
   student.score = studentScore;
 
-  student.evaluation = convert_score_into_evaluation(studentScore);
+  student.evaluation = convertScoreIntoEvaluation(studentScore);
 
   students.push(student);
 };
