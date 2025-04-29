@@ -40,16 +40,17 @@ const validateStudentScore = (studentScore: number): boolean => {
 };
 
 const convertScoreIntoEvaluation = (studentScore: number): string => {
-  if (studentScore >= 90 && studentScore <= 100) {
-    return "A";
-  } else if (studentScore >= 80 && studentScore <= 89) {
-    return "B";
-  } else if (studentScore >= 70 && studentScore <= 79) {
-    return "C";
-  } else if (studentScore >= 60 && studentScore <= 69) {
-    return "D";
-  } else {
-    return "F";
+  switch (true) {
+    case studentScore >= 90 && studentScore <= 100:
+      return "A";
+    case studentScore >= 80 && studentScore <= 89:
+      return "B";
+    case studentScore >= 70 && studentScore <= 79:
+      return "C";
+    case studentScore >= 60 && studentScore <= 69:
+      return "D";
+    default:
+      return "F";
   }
 };
 
