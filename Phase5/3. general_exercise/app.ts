@@ -27,7 +27,7 @@ const validateStudentScore = (studentScore: number): boolean => {
 };
 
 const inputStudentInformation = () => {
-  let student = { number: 0, score: 0 };
+  let student = { id: 0, score: 0 };
   let studentNumber: number = 0;
   let studentScore: number = 0;
 
@@ -43,7 +43,7 @@ const inputStudentInformation = () => {
       break;
     }
   }
-  student.number = studentNumber;
+  student.id = studentNumber;
 
   while (true) {
     studentScore = Number(readlineSync.question("成績を入力してください："));
