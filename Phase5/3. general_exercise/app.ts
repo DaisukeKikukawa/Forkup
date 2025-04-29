@@ -7,7 +7,12 @@ const menuOptions: string[] = [
   "4. 終了",
 ];
 
-const students: any[] = [];
+type Student = {
+  id: number;
+  score: number;
+};
+
+const students: Student[] = [];
 
 const validateStudentNumberLargerThanZero = (studentNumber: number): boolean => {
   return studentNumber <= 0;
