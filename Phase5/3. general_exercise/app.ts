@@ -7,36 +7,23 @@ const menuOptions: string[] = [
   "4. 終了",
 ];
 
-const students: any[] = [];
+type Student = {
+  id: number;
+  score: number;
+};
 
-const validateStudentInformation = (studentNumber: number): boolean => {
-  if (studentNumber === 0) {
-    console.log("入力は必須です");
-    return false;
-  } else if (Number.isNaN(studentNumber)) {
-    console.log("半角数字を入力してください");
-    return false;
-  } else {
-    return true;
-  }
+const students: Student[] = [];
+
+const validateStudentNumberLargerThanZero = (studentNumber: number): boolean => {
+  return studentNumber <= 0;
 };
 
 const validateDuplicateStudentNumber = (studentNumber: number): boolean => {
-  if (students.find((student) => student.number === studentNumber)) {
-    console.log("すでにその生徒番号は登録されています");
-    return false;
-  } else {
-    return true;
-  }
+  return students.some((student) => student.id === studentNumber);
 };
 
 const validateStudentScore = (studentScore: number): boolean => {
-  if (!(studentScore >= 0 && studentScore <= 100)) {
-    console.log("1〜100までの数字を入力してください");
-    return false;
-  } else {
-    return true;
-  }
+  return studentScore < 0 || studentScore > 100;
 };
 
 const convertScoreIntoEvaluation = (studentScore: number): string => {
@@ -54,7 +41,7 @@ const convertScoreIntoEvaluation = (studentScore: number): string => {
   }
 };
 
-const inputStudentInformation = () => {
+const inputStudentInformation = () => 
   let student = { number: 0, score: 0, evaluation: "" };
   let studentNumber: number = 0;
   let studentScore: number = 0;
@@ -63,21 +50,21 @@ const inputStudentInformation = () => {
     studentNumber = Number(
       readlineSync.question("生徒番号を入力してください：")
     );
-    if (
-      validateStudentInformation(studentNumber) &&
-      validateDuplicateStudentNumber(studentNumber)
-    ) {
+    if (validateStudentNumberLargerThanZero(studentNumber)) {
+      console.log("生徒番号は1以上で入力してください")
+    } else if (validateDuplicateStudentNumber(studentNumber)) {
+      console.log("その生徒番号はすでに登録済みです")
+    } else {
       break;
     }
   }
-  student.number = studentNumber;
+  student.id = studentNumber;
 
   while (true) {
     studentScore = Number(readlineSync.question("成績を入力してください："));
-    if (
-      validateStudentInformation(studentScore) &&
-      validateStudentScore(studentScore)
-    ) {
+    if (validateStudentScore(studentScore)) {
+      console.log("1〜100の数字を入力してください")
+    } else {
       break;
     }
   }
