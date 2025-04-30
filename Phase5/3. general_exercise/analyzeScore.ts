@@ -1,5 +1,24 @@
 import { Student } from "./student";
 
+export const showAnalyzedScore = (students: Student[]) => {
+  let maxScore: number = calculateMaxScore(students);
+  let minScore: number = calculateMinScore(students);
+  let averageScore: number = calculateAverageScore(students);
+  let numberOfStudentByEvaluation =
+    calculateNumberOfStudentByEvaluation(students);
+  let passRate: number = calculatePassRate(students);
+  console.log("");
+  console.log("");
+  console.log("=== 成績詳細 ===");
+  console.log(`最高点：${maxScore}  最低点：${minScore}`);
+  console.log(`平均点：${averageScore}`);
+  numberOfStudentByEvaluation.forEach((group) => {
+    process.stdout.write(`${group.evaluation}評価:${group.count}人  `);
+  });
+  console.log("");
+  console.log(`合格率：${passRate}`);
+};
+
 export const convertScoreIntoEvaluation = (studentScore: number): string => {
   switch (true) {
     case studentScore >= 90 && studentScore <= 100:

@@ -6,7 +6,7 @@ import {
   validateDuplicateStudentNumber,
   validateStudentScore,
 } from "./validation";
-import { convertScoreIntoEvaluation, calculateMaxScore, calculateMinScore, calculateAverageScore, calculateNumberOfStudentByEvaluation, calculatePassRate } from "./analyzeScore"
+import { convertScoreIntoEvaluation, showAnalyzedScore } from "./analyzeScore";
 
 const students: Student[] = [];
 
@@ -51,24 +51,6 @@ const showStudentRecord = () => {
   });
 };
 
-const showAnalyzedResult = () => {
-  let maxScore: number = calculateMaxScore(students);
-  let minScore: number = calculateMinScore(students);
-  let averageScore: number = calculateAverageScore(students);
-  let numberOfStudentByEvaluation = calculateNumberOfStudentByEvaluation(students);
-  let passRate: number = calculatePassRate(students);
-  console.log("");
-  console.log("");
-  console.log("=== 成績詳細 ===");
-  console.log(`最高点：${maxScore}  最低点：${minScore}`);
-  console.log(`平均点：${averageScore}`);
-  numberOfStudentByEvaluation.forEach((group) => {
-    process.stdout.write(`${group.evaluation}評価:${group.count}人  `);
-  });
-  console.log("");
-  console.log(`合格率：${passRate}`);
-};
-
 while (true) {
   let selectedMenu: string = showMenu();
   if (Number(selectedMenu) === 1) {
@@ -76,7 +58,7 @@ while (true) {
   } else if (Number(selectedMenu) === 2) {
     showStudentRecord();
   } else if (Number(selectedMenu) === 3) {
-    showAnalyzedResult();
+    showAnalyzedScore(students);
   } else if (Number(selectedMenu) === 4) {
     break;
   }
