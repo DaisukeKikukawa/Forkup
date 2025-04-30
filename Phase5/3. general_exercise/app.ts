@@ -1,4 +1,5 @@
 const readlineSync = require("readline-sync");
+import { Student } from "./student";
 
 const menuOptions: string[] = [
   "1. 点数入力",
@@ -97,35 +98,29 @@ const calculatePassRate = (): number => {
 };
 
 const inputStudentInformation = () => {
-  let student: Student = { id: 0, score: 0, evaluation: "" };
-  let studentNumber: number = 0;
-  let studentScore: number = 0;
+  const student = new Student();
 
   while (true) {
-    studentNumber = Number(
-      readlineSync.question("生徒番号を入力してください：")
-    );
-    if (validateStudentNumberLargerThanZero(studentNumber)) {
-      console.log("生徒番号は1以上で入力してください")
-    } else if (validateDuplicateStudentNumber(studentNumber)) {
-      console.log("その生徒番号はすでに登録済みです")
+    student.id = Number(readlineSync.question("生徒番号を入力してください："));
+    if (validateStudentNumberLargerThanZero(student.id)) {
+      console.log("生徒番号は1以上で入力してください");
+    } else if (validateDuplicateStudentNumber(student.id,students)) {
+      console.log("その生徒番号はすでに登録済みです");
     } else {
       break;
     }
   }
-  student.id = studentNumber;
 
   while (true) {
-    studentScore = Number(readlineSync.question("成績を入力してください："));
-    if (validateStudentScore(studentScore)) {
+    student.score = Number(readlineSync.question("成績を入力してください："));
+    if (validateStudentScore(student.score)) {
       console.log("1〜100の数字を入力してください")
     } else {
       break;
     }
   }
-  student.score = studentScore;
 
-  student.evaluation = convertScoreIntoEvaluation(studentScore);
+  student.evaluation = convertScoreIntoEvaluation(student.score);
 
   students.push(student);
 };
