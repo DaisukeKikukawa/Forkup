@@ -1,5 +1,6 @@
 const readlineSync = require("readline-sync");
 import { Student } from "./student";
+import {showMenu} from "./menu"
 
 const menuOptions: string[] = [
   "1. 点数入力",
