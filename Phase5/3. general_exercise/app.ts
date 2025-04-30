@@ -42,6 +42,60 @@ const convertScoreIntoEvaluation = (studentScore: number): string => {
   }
 };
 
+const calculateMaxScore = (): number => {
+  const maxScore: number = students.reduce((max, student): number => {
+    if (student.score > max) {
+      return student.score;
+    } else {
+      return max;
+    }
+  }, 0);
+  return maxScore;
+};
+
+const calculateMinScore = (): number => {
+  const minScore: number = students.reduce((min, student): number => {
+    if (student.score < min) {
+      return student.score;
+    } else {
+      return min;
+    }
+  }, 0);
+  return minScore;
+};
+
+const calculateAverageScore = (): number => {
+  const totalScore = students.reduce(
+    (prev, current) => prev + current.score,
+    0
+  );
+  const averageScore = Math.round(totalScore / students.length);
+  return averageScore;
+};
+
+const calculateNumberOfStudentByEvaluation = () => {
+  let groupByEvaluations: any[] = [];
+
+  students.forEach((student) => {
+    const evaluation = groupByEvaluations.find(
+      (groupByEvaluation) => groupByEvaluation.evaluation === student.evaluation
+    );
+
+    if (evaluation) {
+      evaluation.count += 1;
+    } else {
+      groupByEvaluations.push({ evaluation: student.evaluation, count: 1 });
+    }
+  });
+  return groupByEvaluations;
+};
+
+const calculatePassRate = (): number => {
+  const passNumber = students.filter((student) => student.score >= 60).length;
+  const passRate = Math.round((passNumber / students.length) * 100);
+  return passRate;
+};
+
 const inputStudentInformation = () => {
   let student: Student = { id: 0, score: 0, evaluation: "" };
   let studentNumber: number = 0;
@@ -89,6 +143,24 @@ const showStudentRecord = () => {
   });
 };
 
+const showAnalyzedResult = () => {
+  let maxScore: number = calculateMaxScore();
+  let minScore: number = calculateMinScore();
+  let averageScore: number = calculateAverageScore();
+  let numberOfStudentByEvaluation = calculateNumberOfStudentByEvaluation();
+  let passRate: number = calculatePassRate();
+  console.log("");
+  console.log("");
+  console.log("=== 成績詳細 ===");
+  console.log(`最高点：${maxScore}  最低点：${minScore}`);
+  console.log(`平均点：${averageScore}`);
+  numberOfStudentByEvaluation.forEach((group) => {
+    process.stdout.write(`${group.evaluation}評価:${group.count}人  `);
+  });
+  console.log("");
+  console.log(`合格率：${passRate}`);
+};
+
 const showMenu = (): string => {
   console.log("");
   console.log("");
@@ -106,6 +178,7 @@ while (true) {
   } else if (Number(selectedMenu) === 2) {
     showStudentRecord();
   } else if (Number(selectedMenu) === 3) {
+    showAnalyzedResult();
   } else if (Number(selectedMenu) === 4) {
     break;
   }
