@@ -1,33 +1,13 @@
 const readlineSync = require("readline-sync");
 import { Student } from "./student";
 import {showMenu} from "./menu"
-
-const menuOptions: string[] = [
-  "1. 点数入力",
-  "2. 成績一覧表示",
-  "3. 成績分析",
-  "4. 終了",
-];
-
-type Student = {
-  id: number;
-  score: number;
-  evaluation: string;
-};
+import {
+  validateStudentNumberLargerThanZero,
+  validateDuplicateStudentNumber,
+  validateStudentScore,
+} from "./validation";
 
 const students: Student[] = [];
-
-const validateStudentNumberLargerThanZero = (studentNumber: number): boolean => {
-  return studentNumber <= 0;
-};
-
-const validateDuplicateStudentNumber = (studentNumber: number): boolean => {
-  return students.some((student) => student.id === studentNumber);
-};
-
-const validateStudentScore = (studentScore: number): boolean => {
-  return studentScore < 0 || studentScore > 100;
-};
 
 const convertScoreIntoEvaluation = (studentScore: number): string => {
   switch (true) {
@@ -155,16 +135,6 @@ const showAnalyzedResult = () => {
   });
   console.log("");
   console.log(`合格率：${passRate}`);
-};
-
-const showMenu = (): string => {
-  console.log("");
-  console.log("");
-  console.log("=== メインメニュー ===");
-  menuOptions.forEach((menuOption) => {
-    console.log(menuOption);
-  });
-  return readlineSync.question("選択してください：");
 };
 
 while (true) {
