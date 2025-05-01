@@ -1,5 +1,4 @@
-const readlineSync = require("readline-sync");
-import { inputStudentInformation, showStudentRecord, Student,  } from "./student";
+import { registerStudent, showStudentRecord, Student } from "./student";
 import { showMenu } from "./menu";
 import { convertScoreIntoEvaluation, showAnalyzedScore } from "./analyzeScore";
 
@@ -8,7 +7,7 @@ const students: Student[] = [];
 while (true) {
   let selectedMenu: string = showMenu();
   if (Number(selectedMenu) === 1) {
-    inputStudentInformation(students);
+    registerStudent(students);
   } else if (Number(selectedMenu) === 2) {
     showStudentRecord(students);
   } else if (Number(selectedMenu) === 3) {

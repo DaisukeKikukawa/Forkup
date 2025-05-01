@@ -41,8 +41,8 @@ export const convertScoreIntoEvaluation = (studentScore: number): string => {
 
 export const calculateMaxScore = (students: Student[]): number => {
   const maxScore: number = students.reduce((max, student): number => {
-    if (student.score > max) {
-      return student.score;
+    if (student.getScore() > max) {
+      return student.getScore();
     } else {
       return max;
     }
@@ -52,8 +52,8 @@ export const calculateMaxScore = (students: Student[]): number => {
 
 export const calculateMinScore = (students: Student[]): number => {
   const minScore: number = students.reduce((min, student): number => {
-    if (student.score < min) {
-      return student.score;
+    if (student.getScore() < min) {
+      return student.getScore();
     } else {
       return min;
     }
@@ -63,7 +63,7 @@ export const calculateMinScore = (students: Student[]): number => {
 
 export const calculateAverageScore = (students: Student[]): number => {
   const totalScore = students.reduce(
-    (prev, current) => prev + current.score,
+    (prev, current) => prev + current.getScore(),
     0
   );
   const averageScore = Math.round(totalScore / students.length);
@@ -76,20 +76,20 @@ export const calculateNumberOfStudentByEvaluation = (students: Student[]) => {
 
   students.forEach((student) => {
     const evaluation = groupByEvaluations.find(
-      (groupByEvaluation) => groupByEvaluation.evaluation === student.evaluation
+      (groupByEvaluation) => groupByEvaluation.evaluation === student.getEvaluation()
     );
 
     if (evaluation) {
       evaluation.count += 1;
     } else {
-      groupByEvaluations.push({ evaluation: student.evaluation, count: 1 });
+      groupByEvaluations.push({ evaluation: student.getEvaluation(), count: 1 });
     }
   });
   return groupByEvaluations;
 };
 
 export const calculatePassRate = (students: Student[]): number => {
-  const passNumber = students.filter((student) => student.score >= 60).length;
+  const passNumber = students.filter((student) => student.getScore() >= 60).length;
   const passRate = Math.round((passNumber / students.length) * 100);
   return passRate;
 };

@@ -10,7 +10,7 @@ export const validateDuplicateStudentNumber = (
   studentId: number,
   students: Student[]
 ): boolean => {
-  return students.some((student) => student.id === studentId);
+  return students.some((student) => student.getId() === studentId);
 };
 
 export const validateStudentScore = (studentScore: number): boolean => {
