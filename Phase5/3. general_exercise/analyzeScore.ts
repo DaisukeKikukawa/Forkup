@@ -1,5 +1,10 @@
 import { Student } from "./student";
 
+type EvaluationGroup = {
+  evaluation: string;
+  count: number;
+};
+
 export const showAnalyzedScore = (students: Student[]) => {
   let maxScore: number = calculateMaxScore(students);
   let minScore: number = calculateMinScore(students);
@@ -66,7 +71,8 @@ export const calculateAverageScore = (students: Student[]): number => {
 };
 
 export const calculateNumberOfStudentByEvaluation = (students: Student[]) => {
-  let groupByEvaluations: any[] = [];
+
+  let groupByEvaluations: EvaluationGroup[] = [];
 
   students.forEach((student) => {
     const evaluation = groupByEvaluations.find(
