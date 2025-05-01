@@ -1,6 +1,6 @@
 import { registerStudent, showStudentRecord, Student } from "./student";
 import { showMenu } from "./menu";
-import { convertScoreIntoEvaluation, showAnalyzedScore } from "./analyzeScore";
+import { showAnalyzedScore } from "./analyzeScore";
 
 const students: Student[] = [];
 
