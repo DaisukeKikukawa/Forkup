@@ -6,12 +6,12 @@ type EvaluationGroup = {
 };
 
 export const showAnalyzedScore = (students: Student[]) => {
-  let maxScore: number = calculateMaxScore(students);
-  let minScore: number = calculateMinScore(students);
-  let averageScore: number = calculateAverageScore(students);
-  let numberOfStudentByEvaluation =
+  const maxScore: number = calculateMaxScore(students);
+  const minScore: number = calculateMinScore(students);
+  const averageScore: number = calculateAverageScore(students);
+  const numberOfStudentByEvaluation =
     calculateNumberOfStudentByEvaluation(students);
-  let passRate: number = calculatePassRate(students);
+  const passRate: number = calculatePassRate(students);
   console.log("");
   console.log("");
   console.log("=== 成績詳細 ===");
