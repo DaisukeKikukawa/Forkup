@@ -37,3 +37,22 @@ export class User {
   }
 }
 
+export const showUsers = async (connection) => {
+  const [users] = await connection.query("SELECT * FROM `users`");
+  console.log("=== ユーザー一覧 ===");
+  console.log(
+    "ID".padEnd(4) + "名前".padEnd(7) + "メールアドレス".padEnd(11) + "年齢"
+  );
+  users.forEach((user: { id: any; name: any; email: any; age: any }) => {
+    console.log(
+      `${String(user.id).padEnd(4)}${String(user.name).padEnd(5)}${String(
+        user.email
+      ).padEnd(15)}${String(user.age).padStart(4)}`
+    );
+  });
+  console.log("------------------");
+  while (true) {
+    const answer = readlineSync.question("Enterキーで戻る");
+    if (answer.trim() === "") break;
+  }
+};
