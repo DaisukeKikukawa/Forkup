@@ -56,6 +56,7 @@ export const showUsers = async (connection) => {
     if (answer.trim() === "") break;
   }
 };
+
 export const registerUser = async (connection) => {
   console.log("=== ユーザー登録 ===");
   let name: string;
@@ -117,3 +118,91 @@ export const registerUser = async (connection) => {
     }
   }
 };
+
+export const updateUser = async (connection) => {
+  console.log("===== ユーザー情報更新 =====");
+  const userId = readlineSync.question(
+    "更新するユーザーのIDを入力してください:"
+  );
+
+  const [rows] = await connection.query("SELECT * FROM `users` WHERE id = ?", [
+    userId,
+  ]);
+  if (rows.length === 0) {
+    console.log("指定されたIDのユーザーが存在しません。");
+    return;
+  }
+
+  const userRow = rows[0];
+  const user = new User(userRow.name, userRow.email, userRow.age);
+
+  console.log("\n現在の情報：");
+  console.log(`名前：${user.getName()}`);
+  console.log(`メールアドレス：${user.getEmail()}`);
+  console.log(`年齢：${user.getAge()}\n`);
+
+  while (true) {
+    const nameInput = readlineSync.question(
+      "新しい名前を入力してください（変更なしの場合はENTER）："
+    );
+    if (nameInput.trim() === "") break;
+
+    if (validateName(nameInput)) {
+      user.setName(nameInput);
+      break;
+    } else {
+      console.log("名前は空にできません。再入力してください。");
+    }
+  }
+
+  while (true) {
+    const emailInput = readlineSync.question(
+      "新しいメールアドレスを入力してください（変更なしの場合はENTER）："
+    );
+    if (emailInput.trim() === "") break;
+
+    if (validateEmail(emailInput)) {
+      user.setEmail(emailInput);
+      break;
+    } else {
+      console.log("有効なメールアドレスを入力してください。");
+    }
+  }
+
+  while (true) {
+    const ageInput = readlineSync.question(
+      "新しい年齢を入力してください（変更なしの場合はENTER）："
+    );
+    if (ageInput.trim() === "") break;
+
+    const ageValue = Number(ageInput);
+    if (validateAge(ageValue)) {
+      user.setAge(ageValue);
+      break;
+    } else {
+      console.log("年齢は0〜120の間で入力してください。");
+    }
+  }
+
+  console.log("\n以下の内容で更新します：");
+  console.log(`名前：${user.getName()}`);
+  console.log(`メールアドレス：${user.getEmail()}`);
+  console.log(`年齢：${user.getAge()}\n`);
+
+  while (true) {
+    const answer = readlineSync.question("更新しますか？（y/n）");
+    if (answer === "y") {
+      await connection.query(
+        "UPDATE users SET name = ?, email = ?, age = ? WHERE id = ?",
+        [user.getName(), user.getEmail(), user.getAge(), userId]
+      );
+      console.log("ユーザー情報を更新しました。");
+      break;
+    } else if (answer === "n") {
+      console.log("更新をキャンセルしました。");
+      break;
+    }
+  }
+};
+
+export const deleteUser = async (connection) => {
