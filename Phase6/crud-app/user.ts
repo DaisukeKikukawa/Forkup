@@ -206,3 +206,36 @@ export const updateUser = async (connection) => {
 };
 
 export const deleteUser = async (connection) => {
+  console.log("===== ユーザー削除 =====");
+  const userId = readlineSync.question(
+    "削除するユーザーのIDを入力してください"
+  );
+
+  const [rows] = await connection.query("SELECT * FROM `users` where id = ?", [
+    userId,
+  ]);
+  if (rows.length === 0) {
+    console.log("指定されたIDのユーザーが存在しません。");
+    return;
+  }
+
+  const userRow = rows[0];
+  const user = new User(userRow.name, userRow.email, userRow.age);
+
+  console.log("\n以下のユーザーを削除します：");
+  console.log(`名前：${user.getName()}`);
+  console.log(`メールアドレス：${user.getEmail()}`);
+  console.log(`年齢：${user.getAge()}\n`);
+
+  while (true) {
+    const answer = readlineSync.question("本当に削除しますか？（y/n）");
+    if (answer === "y") {
+      const [result, fields] = await connection.query(
+        "DELETE FROM users WHERE id = ?",
+        [userId]
+      );
+      console.log("ユーザーが削除されました。");
+      break;
+    } else if (answer === "n") break;
+  }
+};
