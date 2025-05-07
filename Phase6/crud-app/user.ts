@@ -112,7 +112,7 @@ export const registerUser = async (connection) => {
         console.error("[エラー] このメールアドレスは既に登録されています");
         break;
       }
-    } else if (answer === "n") {
+    } else {
       console.log("登録をキャンセルしました。");
       break;
     }
