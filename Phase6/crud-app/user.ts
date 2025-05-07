@@ -1,5 +1,5 @@
 import readlineSync from "readline-sync";
-import { validateName, validateEmail, validateAge } from "./validation.js";
+import { validateName, validateEmail, validateAge, validateUniqueEmail } from "./validation.js";
 
 export class User {
   private _name: string;
@@ -74,10 +74,18 @@ export const registerUser = async (connection) => {
 
   while (true) {
     email = readlineSync.question("メールアドレスを入力してください： ");
+
     if (validateEmail(email)) {
-      break;
+      const isUnique = await validateUniqueEmail(email, connection);
+      if (isUnique) {
+        break;
+      } else {
+        console.log(
+          "このメールアドレスは既に登録されています。別のメールアドレスを入力してください。"
+        );
+      }
     } else {
-      console.log("有効なメールアドレスを入力してください。");
+      console.log("有効なメールアドレスの形式で入力してください。");
     }
   }
 
