@@ -2,38 +2,38 @@ import readlineSync from "readline-sync";
 import { validateName, validateEmail, validateAge } from "./validation.js";
 
 export class User {
-  private name: string;
-  private email: string;
-  private age: number;
+  private _name: string;
+  private _email: string;
+  private _age: number;
 
   constructor(name: string, email: string, age: number) {
-    this.name = name;
-    this.email = email;
-    this.age = age;
+    this._name = name;
+    this._email = email;
+    this._age = age;
   }
 
-  getName(): string {
-    return this.name;
+  get name(): string {
+    return this._name;
   }
 
-  getEmail(): string {
-    return this.email;
+  get email(): string {
+    return this._email;
   }
 
-  getAge(): number {
-    return this.age;
+  get age(): number {
+    return this._age;
   }
 
   setName(name: string): void {
-    this.name = name;
+    this._name = name;
   }
 
   setEmail(email: string): void {
-    this.email = email;
+    this._email = email;
   }
 
   setAge(age: number): void {
-    this.age = age;
+    this._age = age;
   }
 }
 
@@ -94,9 +94,9 @@ export const registerUser = async (connection) => {
 
   console.log("");
   console.log("以下の内容で登録しますか？");
-  console.log(`名前：${user.getName()}`);
-  console.log(`メールアドレス：${user.getEmail()}`);
-  console.log(`年齢：${user.getAge()}`);
+  console.log(`名前：${user.name}`);
+  console.log(`メールアドレス：${user.email}`);
+  console.log(`年齢：${user.age}`);
   console.log("");
   while (true) {
     const answer = readlineSync.question("登録しますか？（y/n）");
@@ -104,7 +104,7 @@ export const registerUser = async (connection) => {
       try {
         const [result, fields] = await connection.query(
           "INSERT INTO users(name,email,age) VALUES(?,?,?)",
-          [user.getName(), user.getEmail(), user.getAge()]
+          [user.name, user.email, user.age]
         );
         console.log("ユーザーが正常に登録されました。");
         break;
@@ -137,9 +137,9 @@ export const updateUser = async (connection) => {
   const user = new User(userRow.name, userRow.email, userRow.age);
 
   console.log("\n現在の情報：");
-  console.log(`名前：${user.getName()}`);
-  console.log(`メールアドレス：${user.getEmail()}`);
-  console.log(`年齢：${user.getAge()}\n`);
+  console.log(`名前：${user.name}`);
+  console.log(`メールアドレス：${user.email}`);
+  console.log(`年齢：${user.age}\n`);
 
   while (true) {
     const nameInput = readlineSync.question(
@@ -185,16 +185,16 @@ export const updateUser = async (connection) => {
   }
 
   console.log("\n以下の内容で更新します：");
-  console.log(`名前：${user.getName()}`);
-  console.log(`メールアドレス：${user.getEmail()}`);
-  console.log(`年齢：${user.getAge()}\n`);
+  console.log(`名前：${user.name}`);
+  console.log(`メールアドレス：${user.email}`);
+  console.log(`年齢：${user.age}\n`);
 
   while (true) {
     const answer = readlineSync.question("更新しますか？（y/n）");
     if (answer === "y") {
       await connection.query(
         "UPDATE users SET name = ?, email = ?, age = ? WHERE id = ?",
-        [user.getName(), user.getEmail(), user.getAge(), userId]
+        [user.name, user.email, user.age, userId]
       );
       console.log("ユーザー情報を更新しました。");
       break;
@@ -223,9 +223,9 @@ export const deleteUser = async (connection) => {
   const user = new User(userRow.name, userRow.email, userRow.age);
 
   console.log("\n以下のユーザーを削除します：");
-  console.log(`名前：${user.getName()}`);
-  console.log(`メールアドレス：${user.getEmail()}`);
-  console.log(`年齢：${user.getAge()}\n`);
+  console.log(`名前：${user.name}`);
+  console.log(`メールアドレス：${user.email}`);
+  console.log(`年齢：${user.age}\n`);
 
   while (true) {
     const answer = readlineSync.question("本当に削除しますか？（y/n）");
