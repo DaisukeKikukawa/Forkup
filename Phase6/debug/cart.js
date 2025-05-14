@@ -3,7 +3,7 @@ function calculateTotal(cart) {
   cart.items.forEach((item) => {
     let price = item.price * item.quantity;
     if (item.discount) {
-      price = price * item.discount;
+      price -= price * item.discount;
     }
     total += price;
   });
