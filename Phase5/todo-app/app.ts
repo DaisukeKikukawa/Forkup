@@ -115,6 +115,23 @@ const server = http.createServer(async(req, res) => {
         res.end(html);
       }
     });
+  } else if (req.url === "/delete" && req.method === "POST") {
+    let body = "";
+
+    req.on("data", (data) => {
+      body += data.toString();
+    });
+
+    req.on("end", async () => {
+      const parsed = parse(body);
+      const id = parsed["id"];
+      const conn = await startConnection();
+      await conn.execute("DELETE FROM todos WHERE id = ?", [id]);
+      await conn.end();
+      res.writeHead(302, { Location: "/" });
+      res.end();
+    });
+  } else if (req.url === "/toggle" && req.method === "POST") {
 });
 
 server.listen(3000, () => {
