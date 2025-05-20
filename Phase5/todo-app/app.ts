@@ -132,6 +132,27 @@ const server = http.createServer(async(req, res) => {
       res.end();
     });
   } else if (req.url === "/toggle" && req.method === "POST") {
+    let body = "";
+
+    req.on("data", (data) => {
+      body += data.toString();
+    });
+
+    req.on("end", async () => {
+      const parsed = parse(body);
+      const id = parsed["id"];
+
+      const conn = await startConnection();
+      await conn.execute(
+        "UPDATE todos SET completed = NOT completed WHERE id = ?",
+        [id]
+      );
+      await conn.end();
+
+      res.writeHead(302, { Location: "/" });
+      res.end();
+    });
+  }
 });
 
 server.listen(3000, () => {
