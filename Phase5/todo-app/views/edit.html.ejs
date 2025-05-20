@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>TODO編集</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <% if (typeof errors !=='undefined' && errors.length> 0) { %>
+      <div class="error-messages">
+        <ul>
+          <% errors.forEach(error=> { %>
+            <li>
+              <%= error %>
+            </li>
+            <% }); %>
+        </ul>
+      </div>
+      <% } %>
+        <div class="add-form">
+          <h2>TODOを編集</h2>
+          <form action="/update" method="post">
+            <input type="hidden" name="id" value="<%= todo.id %>">
+            <div>
+              <label for="title">タイトル：</label><br>
+              <input type="text" id="title" name="title" value="<%= todo.title %>">
+            </div>
+            <div>
+              <label for="description">詳細：</label><br>
+              <textarea id="description" name="description"><%= todo.description %></textarea>
+            </div>
+            <button type="submit">更新</button>
+          </form>
+        </div>
+        <a href="/" class="back-btn">戻る</a>
+  </div>
+</body>
+
+</html>
