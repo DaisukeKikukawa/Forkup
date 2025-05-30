@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>TODO一覧</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <% if (typeof errors !=='undefined' && errors.length> 0) { %>
+      <div class="error-messages">
+        <ul>
+          <% errors.forEach(error=> { %>
+            <li>
+              <%= error %>
+            </li>
+            <% }); %>
+        </ul>
+      </div>
+      <% } %>
+
+        <div class="add-form">
+          <h2>新規TODOを追加</h2>
+          <form action="/create" method="post">
+            <div>
+              <label for="title">タイトル：</label><br>
+              <input type="text" id="title" name="title"
+                value="<%= typeof formData !== 'undefined' ? formData.title || '' : '' %>" placeholder="タスクのタイトルを入力">
+            </div>
+            <div>
+              <label for="description" class="large-label">詳細：</label><br>
+              <textarea id="description" name="description"
+                placeholder="タスクの詳細を入力"><%= typeof formData !== 'undefined' ? formData.description || '' : '' %></textarea>
+            </div>
+            <button type="submit">追加</button>
+          </form>
+        </div>
+
+        <section class="todo-list">
+          <h2>TODO一覧</h2>
+          <ul>
+            <% todos.forEach(todo=> { %>
+              <li class="todo-item <%= todo.completed ? 'completed' : '' %>">
+                <form action="/toggle" method="post" style="display: inline;">
+                  <input type="hidden" name="id" value="<%= todo.id %>">
+                  <input type="checkbox" onchange="this.form.submit()" <%=todo.completed ? 'checked' : '' %>>
+                </form>
+                <span class="todo-title">
+                  <%= todo.title %>
+                </span>
+                  <div class="actions">
+                    <a href="/edit?id=<%= todo.id %>" class="btn btn-edit">編集</a>
+                    <form action="/delete" method="post" style="display:inline; margin: 0;"
+                      onsubmit="return confirm('本当に削除しますか？');">
+                      <input type="hidden" name="id" value="<%= todo.id %>">
+                      <button type="submit" class="btn btn-delete">削除</button>
+                    </form>
+                  </div>
+              </li>
+              <% }) %>
+          </ul>
+        </section>
+  </div>
+</body>
+
+</html>
