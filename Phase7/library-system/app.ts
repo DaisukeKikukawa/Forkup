@@ -3,7 +3,7 @@ import express from 'express';
 const app: express.Express = express();
 
 
-// import bodyParser from'body-parser'
+import bodyParser from 'body-parser'
 
 const methodOverride = require("method-override");
 
@@ -26,8 +26,8 @@ app.use(express.static(__dirname + "/../public/"))
 
 // middleware
 app.use(express.json())
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 app.use(myLogger)
 

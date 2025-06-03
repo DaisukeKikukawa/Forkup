@@ -1,15 +1,12 @@
-import express from 'express';
-const { startConnection } = require("../..//config/database");
+import express from "express";
+const { startConnection } = require("../config/database");
 const router = express.Router();
+import { User } from "../model/user";
 
 // 一覧表示
 router.get("/users", async (req, res) => {
-  const connection = await startConnection();
-    const [rows] = await connection.execute(
-      "SELECT id, name, email, phone, address, created_at, updated_at FROM users ORDER BY created_at DESC"
-    );
-    res.render("users/index", { users: rows });
-    await connection.end();
+  const users = await User.findAll();
+  res.render("users/index", { users: users });
 });
 
 // 新規作成画面
@@ -17,29 +14,33 @@ router.get("/users/new", (req, res) => {
   res.render("users/new");
 });
 
+interface UserShowRequest {
+  params: {
+    id: number;
+  }
+}
+
 // 詳細画面
-router.get("/users/:id", async (req, res) => {
-  const connection = await startConnection();
-  const [rows] = await connection.execute(
-    "SELECT id, name, email, phone, address, created_at, updated_at FROM users WHERE id = ?",
-    [req.params.id]
-  );
-  res.render("users/show", { user: rows[0] });
-  await connection.end();
+router.get("/users/:id", async (req: UserShowRequest, res) => {
+  const user = await User.findByPk(req.params.id);
+  res.render("users/show", { user: user });
 });
 
+interface UserCreateRequest {
+  body: {
+    name: string;
+    email: string;
+    password: string;
+    phone: string;
+    address: string;
+  };
+}
+
 // 新規作成処理
-router.post("/users/create", async (req, res) => {
-  const connection = await startConnection();
-    const { name, email, password, phone, address } = req.body;
-
-    await connection.execute(
-      "INSERT INTO users (name, email, password_hash, phone, address) VALUES (?, ?, ?, ?, ?)",
-      [name, email, 1111, phone, address]
-    );
-
-    res.redirect("/users");
-    await connection.end();
+router.post("/users/create", async (req: UserCreateRequest, res) => {
+  const { name, email, password, phone, address } = req.body;
+  await User.create({ name, email, password_hash: password, phone, address });
+  res.redirect("/users");
 });
 
 // 編集画面
@@ -71,10 +72,7 @@ router.put("/users/:id", async (req, res) => {
 // 削除処理
 router.delete("/users/:id", async (req, res) => {
   const connection = await startConnection();
-  await connection.execute(
-    "DELETE FROM users WHERE id = ?",
-    [req.params.id]
-  );
+  await connection.execute("DELETE FROM users WHERE id = ?", [req.params.id]);
 
   res.redirect("/users");
   await connection.end();

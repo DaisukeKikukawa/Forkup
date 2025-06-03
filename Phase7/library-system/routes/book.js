@@ -1,5 +1,5 @@
 const express = require("express");
-const { startConnection } = require("../config/database");
+const { startConnection } = require("../dist/config/database");
 const router = express.Router();
 
 // 一覧表示
