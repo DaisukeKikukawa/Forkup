@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>library-system</title>
+  <link rel="stylesheet" href="/user/user.index.css">
+</head>
+
+<body>
+  <div class="container">
+    <h2>ユーザー一覧</h2>
+
+    <a href="/users/new" class="btn">新規ユーザーを追加</a>
+
+      <table>
+        <thead>
+          <tr>
+            <th>名前</th>
+            <th>メールアドレス</th>
+            <th>電話番号</th>
+            <th>住所</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach(user=> { %>
+            <tr>
+              <td>
+                <%= user.name %>
+              </td>
+              <td>
+                <%= user.email %>
+              </td>
+              <td>
+                <%= user.phone %>
+              </td>
+              <td>
+                <%= user.address %>
+              </td>
+              <td>
+                <a href="/users/<%= user.id %>">詳細</a>
+                <a href="/users/<%= user.id %>/edit">編集</a>
+                <form style="display: inline;" method="POST" action="/users/<%= user.id %>?_method=DELETE">
+                  <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+        </tbody>
+      </table>
+  </div>
+</body>
+
+</html>
