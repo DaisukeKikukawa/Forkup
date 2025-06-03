@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>library-system</title>
+  <link rel="stylesheet" href="/book/book.show.css">
+</head>
+
+<body>
+  <div class="container">
+    <h2>書籍詳細</h2>
+
+    <div class="detail-group">
+      <div class="detail-label">タイトル</div>
+      <div class="detail-value">
+        <%= book.title %>
+      </div>
+    </div>
+
+    <div class="detail-group">
+      <div class="detail-label">著者</div>
+      <div class="detail-value">
+        <%= book.author %>
+      </div>
+    </div>
+
+    <div class="detail-group">
+      <div class="detail-label">ISBN</div>
+      <div class="detail-value">
+        <%= book.isbn || '未設定' %>
+      </div>
+    </div>
+
+    <div class="detail-group">
+      <div class="detail-label">出版社</div>
+      <div class="detail-value">
+        <%= book.publisher || '未設定' %>
+      </div>
+    </div>
+
+    <div class="detail-group">
+      <div class="detail-label">出版日</div>
+      <div class="detail-value">
+        <% if (book.published_date) { %>
+          <%= new Date(book.published_date).toLocaleDateString('ja-JP') %>
+            <% } else { %>
+              未設定
+              <% } %>
+      </div>
+    </div>
+
+    <div class="detail-group">
+      <div class="detail-label">ステータス</div>
+      <div class="detail-value">
+        <% if (book.status===1) { %>
+          <span>利用可能</span>
+        <% } else if (book.status===2) { %>
+          <span>貸出中</span>
+        <% } else if (book.status===3) { %>
+          <span>予約中</span>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <a href="/books/<%= book.id %>/edit" class="btn">編集</a>
+      <form style="display: inline;" method="POST" action="/books/<%= book.id %>?_method=DELETE">
+        <button type="submit" class="btn btn-danger">削除</button>
+      </form>
+      <a href="/books" class="btn btn-secondary">一覧に戻る</a>
+    </div>
+  </div>
+</body>
+
+</html>

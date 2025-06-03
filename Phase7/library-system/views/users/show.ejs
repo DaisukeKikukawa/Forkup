@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>library-system</title>
+  <link rel="stylesheet" href="/user/user.show.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <h2>ユーザー詳細</h2>
+    <div class="detail-group">
+      <div class="detail-label">氏名</div>
+      <div class="detail-value">
+        <%= user.name %>
+      </div>
+    </div>
+
+    <div class="detail-group">
+      <div class="detail-label">メールアドレス</div>
+      <div class="detail-value">
+        <%= user.email %>
+      </div>
+    </div>
+
+    <div class="detail-group">
+      <div class="detail-label">電話番号</div>
+      <div class="detail-value">
+        <%= user.phone || '未設定' %>
+      </div>
+    </div>
+
+    <div class="detail-group">
+      <div class="detail-label">住所</div>
+      <div class="detail-value">
+        <% if (user.address) { %>
+          <%= user.address %>
+            <% } else { %>
+              未設定
+              <% } %>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <a href="/users/<%= user.id %>/edit" class="btn">編集</a>
+      <form style="display: inline;" method="POST" action="/users/<%= user.id %>?_method=DELETE">
+        <button type="submit" class="btn btn-danger"
+          onclick="return confirm('本当に削除しますか？')">削除</button>
+      </form>
+      <a href="/users" class="btn btn-secondary">一覧に戻る</a>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>library-system</title>
+  <link rel="stylesheet" href="/book/book.edit.css">
+</head>
+
+<body>
+  <div class="container">
+    <h2>書籍情報の編集</h2>
+
+    <form method="POST" action="/books/<%= book.id %>?_method=PUT">
+      <div class="form-group">
+        <label for="title">タイトル <span class="required">*</span></label>
+        <input type="text" id="title" name="title" value="<%= book.title %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="author">著者 <span class="required">*</span></label>
+        <input type="text" id="author" name="author" value="<%= book.author %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="isbn">ISBN</label>
+        <input type="text" id="isbn" name="isbn" value="<%= book.isbn || '' %>" placeholder="例: 978-4-XXXX-XXXX-X">
+      </div>
+
+      <div class="form-group">
+        <label for="publisher">出版社</label>
+        <input type="text" id="publisher" name="publisher" value="<%= book.publisher || '' %>">
+      </div>
+
+      <div class="form-group">
+        <label for="published_date">出版日</label>
+        <input type="date" id="published_date" name="published_date"
+          value="<%= book.published_date %>">
+      </div>
+
+      <div class="form-group">
+        <label for="status">ステータス</label>
+        <select id="status" name="status">
+          <option value="1" <%=book.status===1 ? 'selected' : '' %>>利用可能</option>
+          <option value="2" <%=book.status===2 ? 'selected' : '' %>>貸出中</option>
+          <option value="3" <%=book.status===3 ? 'selected' : '' %>>予約中</option>
+        </select>
+      </div>
+
+      <div class="btn-group">
+        <button type="submit" class="btn">更新</button>
+        <a href="/books/<%= book.id %>" class="btn btn-secondary">詳細に戻る</a>
+        <a href="/books" class="btn btn-secondary">一覧に戻る</a>
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>
