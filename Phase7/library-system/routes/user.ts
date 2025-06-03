@@ -1,6 +1,5 @@
-const express = require("express");
-const { startConnection } = require("../config/database");
-
+import express from 'express';
+const { startConnection } = require("../..//config/database");
 const router = express.Router();
 
 // 一覧表示
@@ -72,17 +71,13 @@ router.put("/users/:id", async (req, res) => {
 // 削除処理
 router.delete("/users/:id", async (req, res) => {
   const connection = await startConnection();
-  const [result] = await connection.execute(
+  await connection.execute(
     "DELETE FROM users WHERE id = ?",
     [req.params.id]
   );
-
-  if (result.affectedRows === 0) {
-    return res.status(404).json({ error: "ユーザーが見つかりません" });
-  }
 
   res.redirect("/users");
   await connection.end();
 });
 
-module.exports = router;
+export default router;

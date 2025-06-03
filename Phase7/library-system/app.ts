@@ -10,7 +10,8 @@ const methodOverride = require("method-override");
 // const postRouter = require("./routes/post");
 import postRoutes from "./routes/post";
 const bookRouter = require("../routes/book");
-const userRouter = require("../routes/user");
+import userRouter from "./routes/user";
+
 // import postRouter from "./routes/post.js";
 // import * as post from "./routes/post.js";
 
