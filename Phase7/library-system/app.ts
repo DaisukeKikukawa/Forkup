@@ -6,10 +6,13 @@ const app: express.Express = express();
 import bodyParser from 'body-parser'
 
 const methodOverride = require("method-override");
+const session = require("express-session");
+const passport = require("passport");
 
 // const postRouter = require("./routes/post");
 import postRoutes from "./routes/post";
 const bookRouter = require("../routes/book");
+const authRouter = require("../routes/auth");
 import userRouter from "./routes/user";
 
 // import postRouter from "./routes/post.js";
@@ -29,6 +32,19 @@ app.use(express.json())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
+
+app.use(
+  session({
+    secret: "development-secret-key",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(myLogger)
 
 //デバッグ
