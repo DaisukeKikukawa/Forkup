@@ -1,27 +1,16 @@
 import express from 'express';
-
 const app: express.Express = express();
-
-
 import bodyParser from 'body-parser'
 
-const methodOverride = require("method-override");
 const session = require("express-session");
 const passport = require("passport");
 
-// const postRouter = require("./routes/post");
+import methodOverride from "method-override";
 import postRoutes from "./routes/post";
 const bookRouter = require("../routes/book");
 const authRouter = require("../routes/auth");
 import userRouter from "./routes/user";
 
-// import postRouter from "./routes/post.js";
-// import * as post from "./routes/post.js";
-
-// import adminRouter from "./routes/admin";
-// app.get("/admin", adminRouter);
-
-console.log("app.tsの読み込み")
 //ファイルの読み込み
 app.set("views", __dirname + "/../views")
 app.set("view engine", "ejs");
@@ -61,15 +50,6 @@ app.use("/", postRoutes);
 app.use("/", bookRouter);
 app.use("/", userRouter);
 app.use("/", authRouter);
-
-//個別定義の際の書き方
-// app.get("/", post.index)
-// app.get("/posts/new", post.new)
-// app.post("/posts/create", post.create)
-// app.get("/posts/:id", post.show)
-// app.get("/posts/:id/edit", post.edit)
-// app.put("/posts/:id/", post.update)
-// app.delete("/posts/:id/", post.destroy)
 
 app.listen(3000)
 console.log("サーバー起動")

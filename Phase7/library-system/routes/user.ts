@@ -1,4 +1,5 @@
 import express from "express";
+import bcrypt from "bcrypt";
 const { startConnection } = require("../config/database");
 const router = express.Router();
 import { User } from "../model/user";
@@ -39,7 +40,11 @@ interface UserCreateRequest {
 // 新規作成処理
 router.post("/users/create", async (req: UserCreateRequest, res) => {
   const { name, email, password, phone, address } = req.body;
-  await User.create({ name, email, password_hash: password, phone, address });
+
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+  await User.create({ name, email, password_hash: hashedPassword, phone, address });
   res.redirect("/users");
 });
 
