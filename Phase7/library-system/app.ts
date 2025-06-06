@@ -44,6 +44,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+require("../config/passport")(app);
 
 app.use(myLogger)
 
@@ -59,6 +60,7 @@ function myLogger(req: express.Request, res: express.Response, next: express.Nex
 app.use("/", postRoutes);
 app.use("/", bookRouter);
 app.use("/", userRouter);
+app.use("/", authRouter);
 
 //個別定義の際の書き方
 // app.get("/", post.index)
