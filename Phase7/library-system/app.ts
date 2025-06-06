@@ -5,7 +5,7 @@ const app: express.Express = express();
 
 import bodyParser from 'body-parser'
 
-const methodOverride = require("method-override");
+import methodOverride from "method-override";
 
 // const postRouter = require("./routes/post");
 import postRoutes from "./routes/post";
