@@ -1,5 +1,6 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const bcrypt = require("bcrypt");
 const { User } = require("../dist/model/user");
 
 module.exports = function (app) {
@@ -13,6 +14,16 @@ module.exports = function (app) {
           const user = await User.findOne({
             where: { email: email },
           });
+
+          const isPasswordValid = await bcrypt.compare(
+            password,
+            user.password_hash
+          );
+
+          if (!isPasswordValid) {
+            return done(null, false, { message: "パスワードが間違っています" });
+          }
+
           return done(null, user);
       }
     )
