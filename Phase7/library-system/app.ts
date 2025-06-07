@@ -7,8 +7,8 @@ const passport = require("passport");
 
 import methodOverride from "method-override";
 import postRoutes from "./routes/post";
-const bookRouter = require("../routes/book");
 const authRouter = require("../routes/auth");
+import bookRouter from "./routes/book";
 import userRouter from "./routes/user";
 
 //ファイルの読み込み
