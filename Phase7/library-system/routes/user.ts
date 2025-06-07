@@ -1,6 +1,5 @@
 import express from "express";
 import bcrypt from "bcrypt";
-const { startConnection } = require("../config/database");
 const router = express.Router();
 import { User } from "../model/user";
 
@@ -48,39 +47,58 @@ router.post("/users/create", async (req: UserCreateRequest, res) => {
   res.redirect("/users");
 });
 
-// 編集画面
-router.get("/users/:id/edit", async (req, res) => {
-  const connection = await startConnection();
-  const [rows] = await connection.execute(
-    "SELECT id, name, email, phone, address FROM users WHERE id = ?",
-    [req.params.id]
-  );
+interface UserEditRequest {
+  params: {
+    id: number;
+  };
+}
 
-  res.render("users/edit", { user: rows[0] });
-  await connection.end();
+// 編集画面
+router.get("/users/:id/edit", async (req: UserEditRequest, res) => {
+  const user = await User.findByPk(req.params.id, {
+    attributes: ["id", "name", "email", "phone", "address"],
+  });
+
+  res.render("users/edit", { user: user });
 });
+
+interface UserUpdateRequest {
+  params: {
+    id: number;
+  };
+  body: {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+  };
+}
 
 // 更新処理
-router.put("/users/:id", async (req, res) => {
-  const connection = await startConnection();
+router.put("/users/:id", async (req: UserUpdateRequest, res) => {
   const { name, email, phone, address } = req.body;
 
-  await connection.execute(
-    "UPDATE users SET name = ?, email = ?, phone = ?, address = ? WHERE id = ?",
-    [name, email, phone || null, address || null, req.params.id]
+  await User.update(
+    {name,email,phone, address},
+    {where: { id: req.params.id },}
   );
 
   res.redirect("/users");
-  await connection.end();
 });
 
+interface UserDeleteRequest {
+  params: {
+    id: number;
+  };
+}
+
 // 削除処理
-router.delete("/users/:id", async (req, res) => {
-  const connection = await startConnection();
-  await connection.execute("DELETE FROM users WHERE id = ?", [req.params.id]);
+router.delete("/users/:id", async (req: UserDeleteRequest, res) => {
+  await User.destroy({
+    where: { id: req.params.id },
+  });
 
   res.redirect("/users");
-  await connection.end();
 });
 
 export default router;
