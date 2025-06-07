@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 
 import session from "express-session";
 import passport from "passport";
+import passportConfig from "./config/passport";
 
 import methodOverride from "method-override";
 import postRoutes from "./routes/post";
@@ -33,9 +34,8 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-require("../config/passport")(app);
-
 app.use(myLogger)
+passportConfig(app);
 
 //デバッグ
 function myLogger(req: express.Request, res: express.Response, next: express.NextFunction) {
