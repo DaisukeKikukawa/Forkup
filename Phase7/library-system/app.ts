@@ -2,8 +2,8 @@ import express from 'express';
 const app: express.Express = express();
 import bodyParser from 'body-parser'
 
-const session = require("express-session");
-const passport = require("passport");
+import session from "express-session";
+import passport from "passport";
 
 import methodOverride from "method-override";
 import postRoutes from "./routes/post";
