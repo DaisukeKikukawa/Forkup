@@ -1,5 +1,7 @@
-const router = require("express").Router();
-const passport = require("passport");
+import express from "express";
+import passport from "passport";
+
+const router = express.Router();
 
 router.get("/login", (req, res) => {
   res.render("account/login.ejs");
@@ -23,9 +25,9 @@ router.post(
 
 router.post("/logout", (req, res) => {
   console.log("ログアウト処理開始");
-  req.logout( () => {
+  req.logout(() => {
     res.redirect("/login");
   });
 });
 
-module.exports = router;
+export default router;

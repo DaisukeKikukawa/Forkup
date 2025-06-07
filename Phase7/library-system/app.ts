@@ -7,7 +7,7 @@ const passport = require("passport");
 
 import methodOverride from "method-override";
 import postRoutes from "./routes/post";
-const authRouter = require("../routes/auth");
+import authRouter from "./routes/auth";
 import bookRouter from "./routes/book";
 import userRouter from "./routes/user";
 
