@@ -3,7 +3,7 @@ const app: express.Express = express();
 import bodyParser from 'body-parser'
 import methodOverride from "method-override";
 import postRoutes from "./routes/post";
-const bookRouter = require("../routes/book");
+import bookRouter from "./routes/book";
 import userRouter from "./routes/user";
 
 //ファイルの読み込み
