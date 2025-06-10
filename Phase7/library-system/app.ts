@@ -1,8 +1,14 @@
 import express from 'express';
 const app: express.Express = express();
 import bodyParser from 'body-parser'
+
+import session from "express-session";
+import passport from "passport";
+import passportConfig from "./config/passport";
+
 import methodOverride from "method-override";
 import postRoutes from "./routes/post";
+import authRouter from "./routes/auth";
 import bookRouter from "./routes/book";
 import userRouter from "./routes/user";
 
@@ -16,7 +22,20 @@ app.use(express.json())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
+
+app.use(
+  session({
+    secret: "development-secret-key",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(myLogger)
+passportConfig(app);
 
 //デバッグ
 function myLogger(req: express.Request, res: express.Response, next: express.NextFunction) {
@@ -30,6 +49,7 @@ function myLogger(req: express.Request, res: express.Response, next: express.Nex
 app.use("/", postRoutes);
 app.use("/", bookRouter);
 app.use("/", userRouter);
+app.use("/", authRouter);
 
 app.listen(3000)
 console.log("サーバー起動")

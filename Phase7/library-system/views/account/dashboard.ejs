@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>library-system</title>
+  <link rel="stylesheet" href="account/account.index.css">
+</head>
+
+<body>
+  <div>
+    <main role="main">
+      <div>
+        <p>ID:<%= user.id %></p>
+        <p>名前:<%= user.name %></p>
+        <p>メール:<%= user.email %></p>
+        <p>電話番号:<%= user.phone %></p>
+        <p>住所:<%= user.address %></p>
+      </div>
+
+      <div>
+        <form method="POST" action="/logout">
+          <input type="submit" value="ログアウト" class="logout" />
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>

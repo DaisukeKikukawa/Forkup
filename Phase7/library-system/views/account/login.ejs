@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>library-system</title>
+  <link rel="stylesheet" href="account/account.index.css">
+</head>
+
+<body>
+  <div>
+    <main role="main">
+      <div>
+        <h1>ログイン</h1>
+      </div>
+      <div>
+        <form method="POST" action="/account/login">
+          <div>
+            <label for="username">メールアドレス：</label>
+            <div>
+              <input type="text" id="username" name="email" />
+            </div>
+          </div>
+          <div>
+            <label for="password">パスワード：</label>
+            <div>
+              <input type="password" id="password" name="password" />
+            </div>
+          </div>
+          <div>
+            <div>
+              <input type="submit" value="ログイン" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>
