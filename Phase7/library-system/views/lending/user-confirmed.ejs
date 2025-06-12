@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>library-system</title>
+  <link rel="stylesheet" href="/lending/user-confirm.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>確認画面</h1>
+    <div class="user-info">
+      <div class="user-detail">
+        <strong>利用者ID:</strong>
+        <%= user.id %>
+      </div>
+      <div class="user-detail">
+        <strong>氏名:</strong>
+        <%= user.name %>
+      </div>
+      <div class="user-detail">
+        <strong>メール:</strong>
+        <%= user.email %>
+      </div>
+      <div class="user-detail">
+        <strong>電話番号:</strong>
+        <%= user.phone %>
+      </div>
+    </div>
+
+    <div class="next-step">
+      <a href="/lending/book-input?userId=<%= user.id %>" class="btn">書籍選択</a>
+      <a href="/lending/start" class="btn btn-secondary">キャンセル</a>
+    </div>
+  </div>
+</body>
+
+</html>
