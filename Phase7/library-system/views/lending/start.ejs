@@ -17,6 +17,8 @@
           利用者IDが見つかりません。正しいIDを入力してください。
         <% } else if (error==='invalid_format' ) { %>
           数値を入力して下さい。
+        <% } else if (error==='max_lend_count' ) { %>
+          貸出上限は5冊までです。
         <% } %>
       </div>
     <% } %>

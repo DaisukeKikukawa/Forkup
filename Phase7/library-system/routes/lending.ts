@@ -24,6 +24,20 @@ router.post("/lending/check-user", async (req: CheckUserRequest, res) => {
     });
   }
 
+  const borrowedRecords = await LendingRecord.findAll({
+    where: {
+      user_id: parseInt(userId),
+    },
+  });
+
+  const borrowedCount = borrowedRecords.length;
+  if (borrowedCount >= 5) {
+    return res.render("lending/start", {
+      error: "max_lend_count",
+      userId: userId,
+    });
+  }
+
   const user = await User.findByPk(parseInt(userId));
 
   if (!user) {
