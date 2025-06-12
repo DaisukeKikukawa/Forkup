@@ -83,4 +83,42 @@ router.post("/lending/check-book", async (req: CheckBookRequest, res) => {
   });
 });
 
+interface ExecuteLendingRequest {
+  body: {
+    userId: string;
+    bookId: string;
+  };
+}
+
+router.post("/lending/execute", async (req: ExecuteLendingRequest, res) => {
+  const { userId, bookId } = req.body;
+
+  const user = await User.findByPk(parseInt(userId));
+  const book = await Book.findByPk(parseInt(bookId));
+
+  const dueDate = new Date();
+  dueDate.setDate(dueDate.getDate() + 14);
+
+  if (!user || !book) {
+    return res.render("lending/start");
+  }
+
+  const lendingRecord = await LendingRecord.create({
+    book_id: book.id,
+    user_id: user.id,
+    borrowed_date: new Date(),
+    due_date: dueDate,
+  });
+
+  res.render("lending/success", {
+    user: user,
+    book: book,
+    lendingRecord: {
+      id: lendingRecord.id,
+      borrowedDate: lendingRecord.borrowedDate,
+      dueDate: dueDate,
+    },
+  });
+});
+
 export default router;

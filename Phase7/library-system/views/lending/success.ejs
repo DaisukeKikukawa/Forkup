@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>library-system</title>
+  <link rel="stylesheet" href="/lending/success.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="lending-ticket">
+      <div class="ticket-header">
+        <h2>貸出票</h2>
+      </div>
+
+      <div class="ticket-section">
+        <h3>利用者情報</h3>
+        <div class="ticket-detail">
+          <div class="ticket-label">利用者ID:</div>
+          <div class="ticket-value">
+            <%= user.id %>
+          </div>
+        </div>
+        <div class="ticket-detail">
+          <div class="ticket-label">氏名:</div>
+          <div class="ticket-value">
+            <%= user.name %>
+          </div>
+        </div>
+        <div class="ticket-detail">
+          <div class="ticket-label">メールアドレス:</div>
+          <div class="ticket-value">
+            <%= user.email %>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket-section">
+        <h3>書籍情報</h3>
+        <div class="ticket-detail">
+          <div class="ticket-label">書籍ID:</div>
+          <div class="ticket-value">
+            <%= book.id %>
+          </div>
+        </div>
+        <div class="ticket-detail">
+          <div class="ticket-label">タイトル:</div>
+          <div class="ticket-value">
+            <%= book.title %>
+          </div>
+        </div>
+        <div class="ticket-detail">
+          <div class="ticket-label">著者:</div>
+          <div class="ticket-value">
+            <%= book.author %>
+          </div>
+        </div>
+          <div class="ticket-detail">
+            <div class="ticket-label">ISBN:</div>
+            <div class="ticket-value">
+              <%= book.isbn %>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a href="/books" class="btn btn-secondary">書籍一覧に戻る</a>
+    </div>
+  </div>
+</body>
+
+</html>
