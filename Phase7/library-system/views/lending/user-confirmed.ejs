@@ -11,6 +11,12 @@
 <body>
   <div class="container">
     <h1>確認画面</h1>
+    <% if (borrowedRecords.length >= 5) { %>
+      <div class="error-message">
+        <strong>貸出上限は5冊です。</strong>
+      </div>
+    <% } %>
+
     <div class="user-info">
       <div class="user-detail">
         <strong>利用者ID:</strong>
@@ -30,9 +36,43 @@
       </div>
     </div>
 
+    <div class="count-info">
+      現在の貸出冊数: <%= borrowedRecords.length %>
+    </div>
+
+    <div class="borrowed-books">
+      <h3>現在借りている本</h3>
+      <% if (borrowedRecords.length> 0) { %>
+        <ul class="book-list">
+          <% borrowedRecords.forEach(record=> { %>
+            <li class="book-item">
+              <div>
+                <div class="book-title">
+                  <%= record.book.title %>
+                </div>
+                <div class="book-author">
+                  著者: <%= record.book.author %>
+                </div>
+              </div>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <div class="no-books">
+          現在借りている本はありません
+        </div>
+      <% } %>
+    </div>
+
     <div class="next-step">
-      <a href="/lending/book-input?userId=<%= user.id %>" class="btn">書籍選択</a>
-      <a href="/lending/start" class="btn btn-secondary">キャンセル</a>
+      <% if (borrowedRecords.length >= 5) { %>
+        <button class="btn" disabled>貸出できません</button>
+      <% } else { %>
+        <a href="/lending/book-input?userId=<%= user.id %>" class="btn">
+          書籍選択
+        </a>
+      <% } %>
+        <a href="/lending/start" class="btn btn-secondary">キャンセル</a>
     </div>
   </div>
 </body>

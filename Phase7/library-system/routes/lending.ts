@@ -24,22 +24,7 @@ router.post("/lending/check-user", async (req: CheckUserRequest, res) => {
     });
   }
 
-  const borrowedRecords = await LendingRecord.findAll({
-    where: {
-      user_id: parseInt(userId),
-    },
-  });
-
-  const borrowedCount = borrowedRecords.length;
-  if (borrowedCount >= 5) {
-    return res.render("lending/start", {
-      error: "max_lend_count",
-      userId: userId,
-    });
-  }
-
   const user = await User.findByPk(parseInt(userId));
-
   if (!user) {
     return res.render("lending/start", {
       error: "user_not_found",
@@ -47,7 +32,17 @@ router.post("/lending/check-user", async (req: CheckUserRequest, res) => {
     });
   }
 
-  res.render("lending/user-confirmed", {user: user});
+  const borrowedRecords = await LendingRecord.findAll({
+    where: {
+      user_id: parseInt(userId),
+    },
+    include: [{ model: Book, as: "book" }],
+  });
+
+  res.render("lending/user-confirmed", {
+    user: user,
+    borrowedRecords: borrowedRecords,
+  });
 });
 
 interface BookInputRequest {
@@ -59,6 +54,11 @@ interface BookInputRequest {
 router.get("/lending/book-input", async (req: BookInputRequest, res) => {
   const { userId } = req.query;
   const user = await User.findByPk(parseInt(userId));
+  if (!user) {
+    return res.render("lending/start", {
+      error: "user_not_found",
+    });
+  }
   res.render("lending/book-input", { user: user });
 });
 

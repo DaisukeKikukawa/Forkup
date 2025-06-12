@@ -57,3 +57,60 @@ h1 {
   text-align: center;
   margin-top: 30px;
 }
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+}
+
+.borrowed-books {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.borrowed-books h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.book-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.book-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.book-title {
+  font-weight: bold;
+  color: #333;
+}
+
+.book-author {
+  color: #666;
+  font-size: 14px;
+}
+
+.btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.count-info {
+  text-align: center;
+  margin: 15px 0;
+  font-size: 16px;
+}
