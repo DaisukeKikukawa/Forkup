@@ -36,4 +36,51 @@ router.post("/lending/check-user", async (req: CheckUserRequest, res) => {
   res.render("lending/user-confirmed", {user: user});
 });
 
+interface BookInputRequest {
+  query: {
+    userId: string;
+  };
+}
+
+router.get("/lending/book-input", async (req: BookInputRequest, res) => {
+  const { userId } = req.query;
+  const user = await User.findByPk(parseInt(userId));
+  res.render("lending/book-input", { user: user });
+});
+
+interface CheckBookRequest {
+  body: {
+    userId: string;
+    bookId: string;
+  };
+}
+
+router.post("/lending/check-book", async (req: CheckBookRequest, res) => {
+  const { userId, bookId } = req.body;
+  const user = await User.findByPk(parseInt(userId));
+
+  if (!bookId || !/^\d+$/.test(bookId)) {
+    return res.render("lending/book-input", {
+      user: user,
+      error: "invalid_format",
+      bookId: bookId,
+    });
+  }
+
+  const book = await Book.findByPk(parseInt(bookId));
+
+  if (!book) {
+    return res.render("lending/book-input", {
+      user: user,
+      error: "book_not_found",
+      bookId: bookId,
+    });
+  }
+
+  res.render("lending/book-confirmed", {
+    user: user,
+    book: book,
+  });
+});
+
 export default router;
