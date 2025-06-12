@@ -11,6 +11,7 @@ import postRoutes from "./routes/post";
 import authRouter from "./routes/auth";
 import bookRouter from "./routes/book";
 import userRouter from "./routes/user";
+import lendingRouter from "./routes/lending";
 
 //ファイルの読み込み
 app.set("views", __dirname + "/../views")
@@ -50,6 +51,7 @@ app.use("/", postRoutes);
 app.use("/", bookRouter);
 app.use("/", userRouter);
 app.use("/", authRouter);
+app.use("/", lendingRouter);
 
 app.listen(3000)
 console.log("サーバー起動")
