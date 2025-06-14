@@ -124,6 +124,11 @@ router.post("/lending/execute", async (req: ExecuteLendingRequest, res) => {
     due_date: dueDate,
   });
 
+  await Book.update(
+    { status: 2 },
+    { where: { id: bookId } }
+  );
+
   res.render("lending/success", {
     user: user,
     book: book,
