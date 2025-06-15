@@ -61,5 +61,42 @@ router.post("/return/check-book", async (req: CheckReturnBookRequest, res) => {
   });
 });
 
+interface ExecuteReturnRequest {
+  body: {
+    bookId: string;
+    lendingRecordId: string;
+  };
+}
+
+router.post("/return/execute", async (req: ExecuteReturnRequest, res) => {
+  const { bookId, lendingRecordId } = req.body;
+
+  const book = await Book.findByPk(parseInt(bookId));
+  const lendingRecord = await LendingRecord.findByPk(
+    parseInt(lendingRecordId),
+    {
+      include: [{ model: User, as: "user" }],
+    }
+  );
+
+  if (!book || !lendingRecord) {
+    return res.render("return/start", {
+      error: "data_not_found",
+      message: "書籍または貸出記録が見つかりません。",
+    });
+  }
+
+  await LendingRecord.update(
+    { returned_date: new Date() },
+    { where: { id: lendingRecord.id } }
+  );
+
+  await Book.update({ status: 1 }, { where: { id: book.id } });
+
+  res.render("return/success", {
+    book: book,
+    user: lendingRecord.user
+  });
+});
 
 export default router;
