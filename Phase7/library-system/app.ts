@@ -12,6 +12,7 @@ import authRouter from "./routes/auth";
 import bookRouter from "./routes/book";
 import userRouter from "./routes/user";
 import lendingRouter from "./routes/lending";
+import returnRouter from "./routes/return";
 
 //ファイルの読み込み
 app.set("views", __dirname + "/../views")
@@ -52,6 +53,7 @@ app.use("/", bookRouter);
 app.use("/", userRouter);
 app.use("/", authRouter);
 app.use("/", lendingRouter);
+app.use("/", returnRouter);
 
 app.listen(3000)
 console.log("サーバー起動")
