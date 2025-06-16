@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>library-system</title>
+  <link rel="stylesheet" href="/lending/start.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>本の貸出</h1>
+    <% if (typeof error !=='undefined' ) { %>
+      <div class="error-message">
+        <% if (error==='user_not_found' ) { %>
+          利用者IDが見つかりません。正しいIDを入力してください。
+        <% } else if (error==='invalid_format' ) { %>
+          数値を入力して下さい。
+        <% } else if (error==='max_lend_count' ) { %>
+          貸出上限は5冊までです。
+        <% } %>
+      </div>
+    <% } %>
+    <form method="POST" action="/lending/check-user">
+      <div class="form-group">
+        <label for="userId">利用者ID</label>
+        <input type="text" id="userId" name="userId">
+      </div>
+      <button type="submit" class="btn">確認</button>
+      <a href="/books" class="btn btn-secondary cancel">キャンセル</a>
+    </form>
+  </div>
+</body>
+
+</html>

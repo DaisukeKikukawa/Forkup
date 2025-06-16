@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>library-system</title>
+  <link rel="stylesheet" href="/lending/book-input.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>本の選択</h1>
+    <% if (typeof error !=='undefined' ) { %>
+      <div class="error-message">
+        <% if (error==='book_not_found' ) { %>
+          書籍IDが見つかりません。正しいIDを入力してください。
+        <% } else if (error==='invalid_format' ) { %>
+          書籍IDは数値で入力してください。
+        <% } %>
+      </div>
+    <% } %>
+    <form method="POST" action="/lending/check-book">
+      <input type="hidden" name="userId" value="<%= user.id %>">
+      <div class="form-group">
+        <label for="bookId">書籍ID</label>
+        <input type="text" id="bookId" name="bookId">
+      </div>
+      <button type="submit" class="btn">書籍を確認</button>
+      <a href="/books" class="btn btn-secondary cancel">キャンセル</a>
+    </form>
+  </div>
+</body>
+
+</html>
