@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import { Book } from "../model/book";
-import { LendingRecord } from "../model/lendingRecord";
+import { LendingHistory } from "../model/lendingHistory";
 import { User } from "../model/user";
 
 router.get("/return/start", (req, res) => {
@@ -40,7 +40,7 @@ router.post("/return/check-book", async (req: CheckReturnBookRequest, res) => {
     });
   }
 
-  const currentLending = await LendingRecord.findOne({
+  const currentLending = await LendingHistory.findOne({
     where: {
       book_id: parseInt(bookId),
     },
@@ -72,7 +72,7 @@ router.post("/return/execute", async (req: ExecuteReturnRequest, res) => {
   const { bookId, lendingRecordId } = req.body;
 
   const book = await Book.findByPk(parseInt(bookId));
-  const lendingRecord = await LendingRecord.findByPk(
+  const lendingRecord = await LendingHistory.findByPk(
     parseInt(lendingRecordId),
     {
       include: [{ model: User, as: "user" }],
@@ -86,7 +86,7 @@ router.post("/return/execute", async (req: ExecuteReturnRequest, res) => {
     });
   }
 
-  await LendingRecord.update(
+  await LendingHistory.update(
     { returned_date: new Date() },
     { where: { id: lendingRecord.id } }
   );
