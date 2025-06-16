@@ -71,15 +71,17 @@ interface ExecuteReturnRequest {
 router.post("/return/execute", async (req: ExecuteReturnRequest, res) => {
   const { bookId, lendingRecordId } = req.body;
 
-  const book = await Book.findByPk(parseInt(bookId));
   const lendingRecord = await LendingHistory.findByPk(
     parseInt(lendingRecordId),
     {
-      include: [{ model: User, as: "user" }],
+      include: [
+        { model: User, as: "user" },
+        { model: Book, as: "book" },
+      ],
     }
   );
 
-  if (!book || !lendingRecord) {
+  if (!lendingRecord || !lendingRecord.book) {
     return res.render("return/start", {
       error: "data_not_found",
       message: "書籍または貸出記録が見つかりません。",
@@ -92,12 +94,13 @@ router.post("/return/execute", async (req: ExecuteReturnRequest, res) => {
   );
 
   await Book.update(
-    { status: Book.Status.Available },{ where: { id: book.id } }
+    { status: Book.Status.Available },
+    { where: { id: lendingRecord.book.id } }
   );
 
   res.render("return/success", {
-    book: book,
-    user: lendingRecord.user
+    book: lendingRecord.book,
+    user: lendingRecord.user,
   });
 });
 
