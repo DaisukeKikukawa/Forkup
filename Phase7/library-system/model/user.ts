@@ -1,6 +1,7 @@
 import { Sequelize, Model, DataTypes } from 'sequelize';
 
 import { sequelizeConnection } from '../config/database';
+import { LendingHistory } from './lendingHistory';
 
 const sequelize = sequelizeConnection;
 class User extends Model {
@@ -12,6 +13,7 @@ class User extends Model {
   declare address: string;
   declare createdAt: Date;
   declare updatedAt: Date;
+  declare lendingHistories: LendingHistory[];
 }
 
 User.init(
