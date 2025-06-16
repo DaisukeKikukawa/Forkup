@@ -5,7 +5,7 @@ import { User } from "./user";
 
 const sequelize = sequelizeConnection;
 
-class LendingRecord extends Model {
+class LendingHistory extends Model {
   declare id: number;
   declare bookId: number;
   declare userId: number;
@@ -18,7 +18,7 @@ class LendingRecord extends Model {
   declare user?: User;
 }
 
-LendingRecord.init(
+LendingHistory.init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -66,17 +66,17 @@ LendingRecord.init(
     },
   },
   {
-    tableName: "lending_records",
+    tableName: "lending_history",
     sequelize,
     underscored: true,
     timestamps: false,
   }
 );
 
-LendingRecord.belongsTo(Book, { foreignKey: "book_id", as: "book" });
-LendingRecord.belongsTo(User, { foreignKey: "user_id", as: "user" });
+LendingHistory.belongsTo(Book, { foreignKey: "book_id", as: "book" });
+LendingHistory.belongsTo(User, { foreignKey: "user_id", as: "user" });
 
-Book.hasMany(LendingRecord, { foreignKey: "book_id", as: "lendingRecords" });
-User.hasMany(LendingRecord, { foreignKey: "user_id", as: "lendingRecords" });
+Book.hasMany(LendingHistory, { foreignKey: "book_id", as: "lendingHistories" });
+User.hasMany(LendingHistory, { foreignKey: "user_id", as: "lendingHistories" });
 
-export { LendingRecord };
+export { LendingHistory };

@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import { User } from "../model/user";
-import { LendingRecord } from "../model/lendingRecord";
+import { LendingHistory } from "../model/lendingHistory";
 import { Book } from "../model/book";
 
 router.get("/lending/start", (req, res) => {
@@ -32,7 +32,7 @@ router.post("/lending/check-user", async (req: CheckUserRequest, res) => {
     });
   }
 
-  const borrowedRecords = await LendingRecord.findAll({
+  const borrowedRecords = await LendingHistory.findAll({
     where: {
       user_id: parseInt(userId),
     },
@@ -117,7 +117,7 @@ router.post("/lending/execute", async (req: ExecuteLendingRequest, res) => {
     return res.render("lending/start");
   }
 
-  const lendingRecord = await LendingRecord.create({
+  const lendingRecord = await LendingHistory.create({
     book_id: book.id,
     user_id: user.id,
     borrowed_date: new Date(),
