@@ -23,6 +23,7 @@ export const Status = {
   Reserved: 3,
   Unavailable: 4,
 } as const;
+Book.Status = Status;
 
 Book.init(
   {

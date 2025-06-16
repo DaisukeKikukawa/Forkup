@@ -24,7 +24,16 @@ router.post("/lending/check-user", async (req: CheckUserRequest, res) => {
     });
   }
 
-  const user = await User.findByPk(parseInt(userId));
+  const user = await User.findByPk(parseInt(userId), {
+    include: [
+      {
+        model: LendingHistory,
+        as: "lendingHistories",
+        include: [{ model: Book, as: "book" }],
+      },
+    ],
+  });
+
   if (!user) {
     return res.render("lending/start", {
       error: "user_not_found",
@@ -32,16 +41,9 @@ router.post("/lending/check-user", async (req: CheckUserRequest, res) => {
     });
   }
 
-  const borrowedRecords = await LendingHistory.findAll({
-    where: {
-      user_id: parseInt(userId),
-    },
-    include: [{ model: Book, as: "book" }],
-  });
-
   res.render("lending/user-confirmed", {
     user: user,
-    borrowedRecords: borrowedRecords,
+    borrowedRecords: user.lendingHistories,
   });
 });
 
@@ -125,7 +127,7 @@ router.post("/lending/execute", async (req: ExecuteLendingRequest, res) => {
   });
 
   await Book.update(
-    { status: Book.Status.BORROWED },
+    { status: Book.Status.Borrowed },
     { where: { id: bookId } }
   );
 
