@@ -110,12 +110,12 @@ router.post("/lending/execute", async (req: ExecuteLendingRequest, res) => {
   const user = await User.findByPk(parseInt(userId));
   const book = await Book.findByPk(parseInt(bookId));
 
-  const dueDate = new Date();
-  dueDate.setDate(dueDate.getDate() + 14);
-
   if (!user || !book) {
     return res.render("lending/start");
   }
+
+  const dueDate = new Date();
+  dueDate.setDate(dueDate.getDate() + 14);
 
   const lendingRecord = await LendingHistory.create({
     book_id: book.id,
