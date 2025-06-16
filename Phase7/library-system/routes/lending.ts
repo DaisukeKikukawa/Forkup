@@ -125,7 +125,7 @@ router.post("/lending/execute", async (req: ExecuteLendingRequest, res) => {
   });
 
   await Book.update(
-    { status: 2 },
+    { status: Book.Status.BORROWED },
     { where: { id: bookId } }
   );
 

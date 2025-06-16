@@ -14,7 +14,15 @@ class Book extends Model {
   declare status: number;
   declare createdAt: Date;
   declare updatedAt: Date;
+  static Status: any;
 }
+
+export const Status = {
+  Available: 1,
+  Borrowed: 2,
+  Reserved: 3,
+  Unavailable: 4,
+} as const;
 
 Book.init(
   {
