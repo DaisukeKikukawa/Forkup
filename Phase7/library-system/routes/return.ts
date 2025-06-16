@@ -33,7 +33,7 @@ router.post("/return/check-book", async (req: CheckReturnBookRequest, res) => {
     });
   }
 
-  if (book.status !== 2) {
+  if (book.status !== Book.Status.Borrowed) {
     return res.render("return/start", {
       error: "book_not_borrowed",
       bookId: bookId,
@@ -91,7 +91,9 @@ router.post("/return/execute", async (req: ExecuteReturnRequest, res) => {
     { where: { id: lendingRecord.id } }
   );
 
-  await Book.update({ status: 1 }, { where: { id: book.id } });
+  await Book.update(
+    { status: Book.Status.Available },{ where: { id: book.id } }
+  );
 
   res.render("return/success", {
     book: book,
