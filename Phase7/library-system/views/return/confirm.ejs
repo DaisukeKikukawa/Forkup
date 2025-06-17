@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>library-system</title>
+  <link rel="stylesheet" href="/return/confirm.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>本の返却</h1>
+    <div class="summary-grid">
+      <div class="info-section">
+        <h3>返却する書籍</h3>
+        <div class="detail-row">
+          <div class="detail-label">書籍ID:</div>
+          <div class="detail-value">
+            <%= book.id %>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">タイトル:</div>
+          <div class="detail-value">
+            <%= book.title %>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">著者:</div>
+          <div class="detail-value">
+            <%= book.author %>
+          </div>
+        </div>
+          <div class="detail-row">
+            <div class="detail-label">ISBN:</div>
+            <div class="detail-value">
+              <%= book.isbn %>
+            </div>
+          </div>
+      </div>
+
+      <div class="info-section">
+        <h3>ユーザー情報</h3>
+        <div class="detail-row">
+          <div class="detail-label">利用者ID:</div>
+          <div class="detail-value">
+            <%= user.id %>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">氏名:</div>
+          <div class="detail-value">
+            <%= user.name %>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">メール:</div>
+          <div class="detail-value">
+            <%= user.email %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-info">
+      <h3>貸出情報</h3>
+      <div class="detail-row">
+        <div class="detail-label">貸出日:</div>
+        <div class="detail-value">
+          <%= lendingRecord.borrowed_date.toLocaleDateString('ja-JP') %>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">返却予定日:</div>
+        <div class="detail-value">
+          <%= lendingRecord.due_date.toLocaleDateString('ja-JP') %>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <form method="POST" action="/return/execute" style="display: inline;">
+        <input type="hidden" name="bookId" value="<%= book.id %>">
+        <input type="hidden" name="lendingRecordId" value="<%= lendingRecord.id %>">
+        <button type="submit" class="btn btn-success">返却する</button>
+      </form>
+      <a href="/return/start" class="btn btn-secondary">キャンセル</a>
+    </div>
+  </div>
+</body>
+
+</html>

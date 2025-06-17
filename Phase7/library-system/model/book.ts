@@ -1,6 +1,7 @@
 import { Sequelize, Model, DataTypes } from "sequelize";
 
 import { sequelizeConnection } from "../config/database";
+import { LendingHistory } from "./lendingHistory";
 
 const sequelize = sequelizeConnection;
 
@@ -15,6 +16,7 @@ class Book extends Model {
   declare createdAt: Date;
   declare updatedAt: Date;
   static Status: any;
+  declare lendingHistories: LendingHistory[];
 }
 
 export const Status = {
