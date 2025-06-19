@@ -1,6 +1,5 @@
 body {
   font-family: Arial, sans-serif;
-  max-width: 600px;
   margin: 50px auto;
   padding: 20px;
   background-color: #f5f5f5;
@@ -19,52 +18,124 @@ h1 {
   margin-bottom: 30px;
 }
 
-.form-group {
-  margin-bottom: 20px;
+.table-container {
+  overflow-x: auto;
+  margin: 20px 0;
 }
 
-label {
-  display: block;
-  margin-bottom: 8px;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f8f9fa;
   font-weight: bold;
   color: #333;
+  position: sticky;
+  top: 0;
 }
 
-input[type="text"] {
-  width: 100%;
-  padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  box-sizing: border-box;
+tr:hover {
+  background-color: #f8f9fa;
 }
 
-.btn {
+.book-title {
+  font-weight: bold;
+  color: #333;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-name {
+  color: #666;
+}
+
+.date-cell {
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.overdue {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.due-soon {
+  color: #ffc107;
+  font-weight: bold;
+}
+
+.btn-return {
   background-color: #28a745;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-return:hover {
+  background-color: #218838;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
   color: white;
   padding: 12px 30px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  margin-top: 10px;
-}
-
-.error-message {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  border: 1px solid #f5c6cb;
-}
-
-.cancel {
   text-decoration: none;
   display: inline-block;
+  margin-top: 20px;
+}
+
+.actions {
   text-align: center;
+  margin-top: 30px;
+}
+
+.sort-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.sort-link:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 15px;
+}
+
+.pagination-info {
+  font-weight: bold;
+  color: #333;
+  font-size: 14px;
 }
