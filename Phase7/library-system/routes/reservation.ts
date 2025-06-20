@@ -65,4 +65,27 @@ router.post(
   }
 );
 
+interface BookInputRequest {
+  query: {
+    userId: string;
+  };
+}
+
+router.get("/reservation/book-input", async (req: BookInputRequest, res) => {
+  const { userId } = req.query;
+
+  if (!userId || !/^\d+$/.test(userId)) {
+    return res.redirect("/reservation/start?error=invalid_user_id");
+  }
+
+  const user = await User.findByPk(parseInt(userId));
+
+  if (!user) {
+    return res.redirect("/reservation/start?error=user_not_found");
+  }
+
+  res.render("reservation/book-input", { user: user });
+});
+
+
 export default router;
