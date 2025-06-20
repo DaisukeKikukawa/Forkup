@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>library-system</title>
+  <link rel="stylesheet" href="/reservation/confirm.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>予約内容確認</h1>
+    <div class="summary-grid">
+      <div class="info-section">
+        <h3>予約申込者</h3>
+        <div class="detail-row">
+          <div class="detail-label">利用者ID:</div>
+          <div class="detail-value">
+            <%= user.id %>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">氏名:</div>
+          <div class="detail-value">
+            <%= user.name %>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">メール:</div>
+          <div class="detail-value">
+            <%= user.email %>
+          </div>
+        </div>
+        <% if (user.phone) { %>
+          <div class="detail-row">
+            <div class="detail-label">電話番号:</div>
+            <div class="detail-value">
+              <%= user.phone %>
+            </div>
+          </div>
+          <% } %>
+      </div>
+
+      <div class="info-section">
+        <h3>予約対象書籍</h3>
+        <div class="detail-row">
+          <div class="detail-label">書籍ID:</div>
+          <div class="detail-value">
+            <%= book.id %>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">タイトル:</div>
+          <div class="detail-value">
+            <%= book.title %>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">著者:</div>
+          <div class="detail-value">
+            <%= book.author %>
+          </div>
+        </div>
+        <% if (book.isbn) { %>
+          <div class="detail-row">
+            <div class="detail-label">ISBN:</div>
+            <div class="detail-value">
+              <%= book.isbn %>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="actions">
+      <form method="POST" action="/reservation/execute" style="display: inline;">
+        <input type="hidden" name="userId" value="<%= user.id %>">
+        <input type="hidden" name="bookId" value="<%= book.id %>">
+        <button type="submit" class="btn btn-warning">予約を申し込む</button>
+      </form>
+      <a href="/reservation/book-input?userId=<%= user.id %>" class="btn btn-secondary">書籍を変更</a>
+      <a href="/books" class="btn btn-secondary">キャンセル</a>
+    </div>
+  </div>
+</body>
+
+</html>

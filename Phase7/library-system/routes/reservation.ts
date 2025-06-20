@@ -121,4 +121,17 @@ router.post("/reservation/check-book", async (req: CheckBookRequest, res) => {
     });
   }
 
+res.render("reservation/confirm", {
+  user: user,
+  book: book,
+  });
+});
+
+interface ExecuteReservationRequest {
+  body: {
+    userId: string;
+    bookId: string;
+  };
+}
+
 export default router;
