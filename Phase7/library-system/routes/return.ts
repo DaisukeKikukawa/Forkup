@@ -5,8 +5,23 @@ import { LendingHistory } from "../model/lendingHistory";
 import { User } from "../model/user";
 import { Status as BookStatus } from "../model/book";
 
-router.get("/return/start", async (req, res) => {
-  const sort = req.query.sort || "borrowed_date";
+const SORT_FIELDS = {
+  TITLE: "title",
+  USER_NAME: "user_name",
+  BORROWED_DATE: "borrowed_date",
+  DUE_DATE: "due_date",
+}
+
+interface ReturnAllRequest {
+  query: {
+    sort: string;
+    order: string;
+    page: string;
+  };
+}
+
+router.get("/return/start", async (req: ReturnAllRequest, res) => {
+  const sort = req.query.sort || SORT_FIELDS.BORROWED_DATE;
   const order = req.query.order || "DESC";
 
   const page = parseInt(req.query.page) || 1;
@@ -14,13 +29,13 @@ router.get("/return/start", async (req, res) => {
   const offset = (page - 1) * limit;
 
   let orderCondition;
-  if (sort === "title") {
-    orderCondition = [{ model: Book, as: "book" },"title",order,];
-  } else if (sort === "user_name") {
+  if (sort === SORT_FIELDS.TITLE) {
+    orderCondition = [{ model: Book, as: "book" }, "title", order];
+  } else if (sort === SORT_FIELDS.USER_NAME) {
     orderCondition = [{ model: User, as: "user" }, "name", order];
-  } else if (sort === "borrowed_date") {
+  } else if (sort === SORT_FIELDS.BORROWED_DATE) {
     orderCondition = ["borrowed_date", order];
-  } else if (sort === "due_date") {
+  } else if (sort === SORT_FIELDS.DUE_DATE) {
     orderCondition = ["due_date", order];
   } else {
     orderCondition = ["borrowed_date", "DESC"];
