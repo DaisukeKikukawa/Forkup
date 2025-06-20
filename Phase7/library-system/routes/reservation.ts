@@ -87,5 +87,38 @@ router.get("/reservation/book-input", async (req: BookInputRequest, res) => {
   res.render("reservation/book-input", { user: user });
 });
 
+interface CheckBookRequest {
+  body: {
+    userId: string;
+    bookId: string;
+  };
+}
+
+router.post("/reservation/check-book", async (req: CheckBookRequest, res) => {
+  const { userId, bookId } = req.body;
+
+  if (!bookId || !/^\d+$/.test(bookId)) {
+    const user = await User.findByPk(parseInt(userId));
+    return res.render("reservation/book-input", {
+      user: user,
+      error: "invalid_format",
+      bookId: bookId,
+    });
+  }
+
+  const user = await User.findByPk(parseInt(userId));
+  const book = await Book.findByPk(parseInt(bookId));
+
+  if (!user || !book) {
+    return res.redirect("/reservation/start");
+  }
+
+  if (book.status !== BookStatus.Borrowed) {
+    return res.render("reservation/book-input", {
+      user: user,
+      error: "book_not_borrowable",
+      bookId: bookId,
+    });
+  }
 
 export default router;
