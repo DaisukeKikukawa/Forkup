@@ -3,89 +3,133 @@ const router = express.Router();
 import { Book } from "../model/book";
 import { LendingHistory } from "../model/lendingHistory";
 import { User } from "../model/user";
+import { Status as BookStatus } from "../model/book";
 
-router.get("/return/start", (req, res) => {
-  res.render("return/start");
-});
+const SORT_FIELDS = {
+  TITLE: "title",
+  USER_NAME: "user_name",
+  BORROWED_DATE: "borrowed_date",
+  DUE_DATE: "due_date",
+}
 
-interface CheckReturnBookRequest {
-  body: {
-    bookId: string;
+interface ReturnAllRequest {
+  query: {
+    sort: string;
+    order: string;
+    page: string;
   };
 }
 
-router.post("/return/check-book", async (req: CheckReturnBookRequest, res) => {
-  const { bookId } = req.body;
+router.get("/return/start", async (req: ReturnAllRequest, res) => {
+  const sort = req.query.sort || SORT_FIELDS.BORROWED_DATE;
+  const order = req.query.order || "DESC";
 
-  if (!bookId || !/^\d+$/.test(bookId)) {
-    return res.render("return/start", {
-      error: "invalid_format",
-      bookId: bookId,
-    });
+  const page = parseInt(req.query.page) || 1;
+  const limit = 10;
+  const offset = (page - 1) * limit;
+
+  let orderCondition;
+  if (sort === SORT_FIELDS.TITLE) {
+    orderCondition = [{ model: Book, as: "book" }, "title", order];
+  } else if (sort === SORT_FIELDS.USER_NAME) {
+    orderCondition = [{ model: User, as: "user" }, "name", order];
+  } else if (sort === SORT_FIELDS.BORROWED_DATE) {
+    orderCondition = ["borrowed_date", order];
+  } else if (sort === SORT_FIELDS.DUE_DATE) {
+    orderCondition = ["due_date", order];
+  } else {
+    orderCondition = ["borrowed_date", "DESC"];
   }
 
-  const book = await Book.findByPk(parseInt(bookId));
-
-  if (!book) {
-    return res.render("return/start", {
-      error: "book_not_found",
-      bookId: bookId,
-    });
-  }
-
-  if (book.status !== Book.Status.Borrowed) {
-    return res.render("return/start", {
-      error: "book_not_borrowed",
-      bookId: bookId,
-    });
-  }
-
-  const currentLending = await LendingHistory.findOne({
+  const result = await LendingHistory.findAndCountAll({
     where: {
-      book_id: parseInt(bookId),
+      returned_date: null,
     },
-    include: [{ model: User, as: "user" }],
+    include: [
+      {
+        model: Book,
+        as: "book",
+      },
+      {
+        model: User,
+        as: "user",
+      },
+    ],
+    order: [orderCondition],
+    limit: limit,
+    offset: offset,
   });
 
-  if (!currentLending) {
-    return res.render("return/start", {
-      error: "book_not_borrowed",
-      bookId: bookId,
-    });
+  res.render("return/start", {
+    borrowedBooks: result.rows,
+    currentSort: {
+      sort: sort,
+      order: order,
+    },
+    pagination: {
+      currentPage: page,
+      totalPages: Math.ceil(result.count / limit),
+      hasPrevious: page > 1,
+      hasNext: page < Math.ceil(result.count / limit),
+      previousPage: page - 1,
+      nextPage: page + 1,
+    },
+  });
+});
+
+interface ReturnConfirmRequest {
+  query: {
+    lendingId: string;
+  };
+}
+
+router.get("/return/confirm", async (req: ReturnConfirmRequest, res) => {
+  const { lendingId } = req.query;
+
+  if (!lendingId || !/^\d+$/.test(lendingId)) {
+    return res.redirect("/return/start?error=invalid_lending_id");
+  }
+
+  const lendingRecord = await LendingHistory.findByPk(parseInt(lendingId), {
+    include: [
+      { model: Book, as: "book" },
+      { model: User, as: "user" },
+    ],
+  });
+
+  if (!lendingRecord) {
+    return res.redirect("/return/start?error=lending_not_found");
+  }
+
+  if (lendingRecord.returnedDate) {
+    return res.redirect("/return/start?error=already_returned");
   }
 
   res.render("return/confirm", {
-    book: book,
-    lendingRecord: currentLending,
-    user: currentLending.user,
+    lendingRecord: lendingRecord,
+    book: lendingRecord.book,
+    user: lendingRecord.user,
   });
 });
 
 interface ExecuteReturnRequest {
   body: {
-    bookId: string;
-    lendingRecordId: string;
+    lendingId: string;
   };
 }
 
 router.post("/return/execute", async (req: ExecuteReturnRequest, res) => {
-  const { bookId, lendingRecordId } = req.body;
+  const { lendingId } = req.body;
 
-  const lendingRecord = await LendingHistory.findByPk(
-    parseInt(lendingRecordId),
-    {
-      include: [
-        { model: User, as: "user" },
-        { model: Book, as: "book" },
-      ],
-    }
-  );
+  const lendingRecord = await LendingHistory.findByPk(parseInt(lendingId), {
+    include: [
+      { model: Book, as: "book" },
+      { model: User, as: "user" },
+    ],
+  });
 
-  if (!lendingRecord || !lendingRecord.book) {
-    return res.render("return/start", {
-      error: "data_not_found",
-      message: "書籍または貸出記録が見つかりません。",
-    });
+  if (!lendingRecord || lendingRecord.returnedDate) {
+    return res.redirect("/return/start");
   }
 
   await LendingHistory.update(
@@ -94,13 +138,18 @@ router.post("/return/execute", async (req: ExecuteReturnRequest, res) => {
   );
 
   await Book.update(
-    { status: Book.Status.Available },
-    { where: { id: lendingRecord.book.id } }
+    { status: BookStatus.Available },
+    { where: { id: lendingRecord.bookId } }
   );
 
   res.render("return/success", {
     book: lendingRecord.book,
+    lendingRecord: {
+      ...lendingRecord.dataValues,
+      returnedDate: new Date(),
+    },
     user: lendingRecord.user,
+    hasReservation: false,
   });
 });
 
