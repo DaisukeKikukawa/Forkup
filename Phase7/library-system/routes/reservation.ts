@@ -134,4 +134,38 @@ interface ExecuteReservationRequest {
   };
 }
 
+router.post("/reservation/execute", async (req: ExecuteReservationRequest, res) => {
+    const { userId, bookId } = req.body;
+
+    const user = await User.findByPk(parseInt(userId));
+    const book = await Book.findByPk(parseInt(bookId));
+
+    if (!user || !book) {
+      return res.redirect("/reservation/start");
+    }
+
+    const expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() + 7);
+
+    const reservation = await Reservation.create({
+      book_id: book.id,
+      user_id: user.id,
+      status: ReservationStatus.Active,
+      reserved_date: new Date(),
+      expire_date: expireDate,
+    });
+
+    res.render("reservation/success", {
+      user: user,
+      book: book,
+      reservation: {
+        id: reservation.id,
+        reservedDate: reservation.reservedDate,
+        expireDate: reservation.expireDate,
+        status: reservation.status,
+      },
+    });
+  }
+);
+
 export default router;
