@@ -15,19 +15,19 @@
         <thead>
           <tr>
             <th>
-              <% const titleNextOrder=currentSort.order==='ASC' ? 'DESC' : 'ASC' ; %>
+              <% const titleNextOrder = currentSort.order === 'ASC' ? 'DESC' : 'ASC' ; %>
               <a href="/return/start?sort=title&order=<%= titleNextOrder %>" class="sort-link">書籍タイトル</a>
             </th>
             <th>
-              <% const userNextOrder=currentSort.order==='ASC' ? 'DESC' : 'ASC' ; %>
+              <% const userNextOrder = currentSort.order === 'ASC' ? 'DESC' : 'ASC' ; %>
               <a href="/return/start?sort=user_name&order=<%= userNextOrder %>" class="sort-link">貸出している人</a>
             </th>
             <th>
-              <% const borrowedNextOrder=currentSort.order==='ASC' ? 'DESC' : 'ASC' ; %>
+              <% const borrowedNextOrder = currentSort.order === 'ASC' ? 'DESC' : 'ASC' ; %>
               <a href="/return/start?sort=borrowed_date&order=<%= borrowedNextOrder %>" class="sort-link">貸出日</a>
             </th>
             <th>
-              <% const dueNextOrder=currentSort.order==='ASC' ? 'DESC' : 'ASC' ; %>
+              <% const dueNextOrder=currentSort.order === 'ASC' ? 'DESC' : 'ASC' ; %>
               <a href="/return/start?sort=due_date&order=<%= dueNextOrder %>" class="sort-link">返却予定日</a>
             </th>
             <th></th>
