@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>library-system</title>
+  <link rel="stylesheet" href="/reservation/start.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>本の予約</h1>
+    <% if (typeof error !=='undefined' ) { %>
+      <div class="error-message">
+        <% if (error==='user_not_found' ) { %>
+          利用者IDが見つかりません。正しいIDを入力してください。
+        <% } else if (error==='user_over_limit' ) { %>
+          予約上限に達しています（最大3件まで）。
+        <% } else if (error==='invalid_format' ) { %>
+          利用者IDは数値で入力してください。
+        <% } %>
+      </div>
+    <% } %>
+
+      <form method="POST" action="/reservation/check-user">
+        <div class="form-group">
+          <label for="userId">利用者ID</label>
+          <input type="text" id="userId" name="userId" required placeholder="利用者IDを入力してください">
+        </div>
+
+        <button type="submit" class="btn">利用者を確認</button>
+        <a href="/books" class="btn btn-secondary cancel"
+          >キャンセル</a>
+      </form>
+  </div>
+</body>
+
+</html>
