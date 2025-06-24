@@ -10,29 +10,66 @@
 
 <body>
   <div class="container">
-    <h1>本の返却</h1>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <% const titleNextOrder = currentSort.order === 'ASC' ? 'DESC' : 'ASC' ; %>
+              <a href="/return/start?sort=title&order=<%= titleNextOrder %>" class="sort-link">書籍タイトル</a>
+            </th>
+            <th>
+              <% const userNextOrder = currentSort.order === 'ASC' ? 'DESC' : 'ASC' ; %>
+              <a href="/return/start?sort=user_name&order=<%= userNextOrder %>" class="sort-link">貸出している人</a>
+            </th>
+            <th>
+              <% const borrowedNextOrder = currentSort.order === 'ASC' ? 'DESC' : 'ASC' ; %>
+              <a href="/return/start?sort=borrowed_date&order=<%= borrowedNextOrder %>" class="sort-link">貸出日</a>
+            </th>
+            <th>
+              <% const dueNextOrder=currentSort.order === 'ASC' ? 'DESC' : 'ASC' ; %>
+              <a href="/return/start?sort=due_date&order=<%= dueNextOrder %>" class="sort-link">返却予定日</a>
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% borrowedBooks.forEach(record=> { %>
+            <tr>
+              <td>
+                <div class="book-title">
+                  <%= record.book.title %>
+                </div>
+              </td>
+              <td class="user-name">
+                <%= record.user.name %>
+              </td>
+              <td class="date-cell">
+                <%= record.borrowed_date.toLocaleDateString('ja-JP') %>
+              </td>
+              <td class="date-cell">
+                <%= record.due_date.toLocaleDateString('ja-JP') %>
+              </td>
+              <td>
+                <a href="/return/confirm?lendingId=<%= record.id %>" class="btn-return">返却</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
 
-    <% if (typeof error !=='undefined' ) { %>
-      <div class="error-message">
-        <% if (error==='book_not_found' ) { %>
-          書籍IDが見つかりません。正しいIDを入力してください。
-        <% } else if (error==='book_not_borrowed' ) { %>
-          この書籍は現在貸出されていません。
-        <% } else if (error==='invalid_format' ) { %>
-          書籍IDは数値で入力してください。
-        <% } %>
-      </div>
-    <% } %>
-
-    <form method="POST" action="/return/check-book">
-      <div class="form-group">
-        <label for="bookId">書籍ID</label>
-        <input type="text" id="bookId" name="bookId" required placeholder="書籍IDを入力してください">
-      </div>
-
-      <button type="submit" class="btn">書籍を確認</button>
-      <a href="/books" class="btn btn-secondary cancel">キャンセル</a>
-    </form>
+    <div class="pagination">
+      <% if (pagination.hasPrevious) { %>
+        <a href="/return/start?page=<%= pagination.previousPage %>&sort=<%= currentSort.sort %>&order=<%= currentSort.order %>" class="pagination-btn">前のページ</a>
+      <% } %>
+      <span class="pagination-info">
+        <%= pagination.currentPage %> / <%= pagination.totalPages %> ページ
+      </span>
+      <% if (pagination.hasNext) { %>
+        <a href="/return/start?page=<%= pagination.nextPage %>&sort=<%= currentSort.sort %>&order=<%= currentSort.order %>" class="pagination-btn">次のページ</a>
+      <% } %>
+    </div>
   </div>
 </body>
 
