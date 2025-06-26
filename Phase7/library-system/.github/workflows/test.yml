@@ -1,7 +1,9 @@
 name: テストの自動実行
 
-on: push
-
+on:
+  push:
+    branches:
+      - feature/github-actions-deploy
 
 jobs:
   test:
