@@ -3,7 +3,7 @@ name: テストの自動実行
 on:
   push:
     branches:
-      - feature/github-actions-deploy
+      - '**'
 
 jobs:
   test:
