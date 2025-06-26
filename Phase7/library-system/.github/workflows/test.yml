@@ -1,8 +1,6 @@
 name: テストの自動実行
 
-on:
-  pull_request:
-    branches: [ main ]
+on: push
 
 jobs:
   test:
@@ -39,3 +37,25 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_NAME: ${{ secrets.DB_NAME }}
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ソースコードを取得する
+        uses: actions/checkout@v4
+
+      - name: サーバーにデプロイする
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/ec2-user/Forkup/Phase7/library-system
+            git pull origin main
+            npm ci
+            npx sequelize-cli db:migrate
+            pkill -f "ts-node.*app.ts" || true
+            nohup npx ts-node --transpile-only app.ts &
