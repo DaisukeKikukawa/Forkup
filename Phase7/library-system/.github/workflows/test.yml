@@ -2,6 +2,7 @@ name: テストの自動実行
 
 on: push
 
+
 jobs:
   test:
     runs-on: ubuntu-latest
