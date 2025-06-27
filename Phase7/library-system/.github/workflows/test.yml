@@ -32,11 +32,9 @@ jobs:
 
       - name: 依存関係をインストール
         run: npm ci
-        working-directory: ./Phase7/library-system
 
       - name: テストを実行
         run: npm run test
-        working-directory: ./Phase7/library-system
         env:
           NODE_ENV: test
           DB_HOST: 127.0.0.1
