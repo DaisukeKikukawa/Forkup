@@ -1,10 +1,24 @@
 import express from "express";
 import passport from "passport";
+import { Request, Response, NextFunction } from "express";
 
 const router = express.Router();
 
+export const requireAuth = (req: Request, res: Response, next: NextFunction) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login?error=auth");
+};
+
 router.get("/login", (req, res) => {
-  res.render("account/login.ejs");
+  let errorMessage;
+  if (req.query.error === "auth") {
+    errorMessage = "ログインが必要です。";
+  } else {
+    errorMessage = null;
+  }
+  res.render("account/login.ejs", { errorMessage });
 });
 
 router.get("/dashboard", (req, res) => {
