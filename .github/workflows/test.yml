@@ -60,9 +60,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/ec2-user/Forkup/Phase7/library-system
-            git pull origin main
-            npm ci
-            npx sequelize-cli db:migrate
-            pkill -f "ts-node.*app.ts" || true
-            nohup npx ts-node --transpile-only app.ts &
+            echo "接続成功！"
+            pwd
+            whoami
