@@ -13,6 +13,11 @@
     <main role="main">
       <div>
         <h1>ログイン</h1>
+        <% if (typeof errorMessage !=='undefined' && errorMessage) { %>
+          <div class="error-message">
+            <%= errorMessage %>
+          </div>
+        <% } %>
       </div>
       <div>
         <form method="POST" action="/account/login">
