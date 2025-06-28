@@ -59,7 +59,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          timeout: 60s
+          command_timeout: 10m
           script: |
-            echo "接続成功！"
-            pwd
-            whoami
+            echo "接続テスト成功"
