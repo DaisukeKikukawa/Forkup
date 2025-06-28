@@ -59,10 +59,13 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          timeout: 60s
+          command_timeout: 10m
           script: |
             cd /home/ec2-user/Forkup/Phase7/library-system
             git pull origin main
             npm ci
             npx sequelize-cli db:migrate
             pkill -f "ts-node.*app.ts" || true
-            nohup npx ts-node --transpile-only app.ts &
+            nohup npx ts-node --transpile-only app.ts > app.log 2>&1 &
+            echo "デプロイ完了！"
