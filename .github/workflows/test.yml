@@ -54,27 +54,25 @@ jobs:
         uses: actions/checkout@v4
 
       - name: サーバーにデプロイする
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "Phase7/library-system/*"
+          target: "/home/ec2-user/Forkup/"
+
+      - name: アプリケーション再起動
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          timeout: 60s
-          command_timeout: 10m
           script: |
             cd /home/ec2-user/Forkup/Phase7/library-system
-            git remote set-url origin https://github.com/DaisukeKikukawa/Forkup.git
-            git pull origin main
             npm ci
             npx sequelize-cli db:migrate
             pkill -f "ts-node.*app.ts" || true
-
-            # 以前と同じ方法で実行
             nohup npx ts-node --transpile-only app.ts > app.log 2>&1 &
-
             sleep 3
-            if pgrep -f "ts-node.*app.ts" > /dev/null; then
-              echo "✅ アプリケーション起動成功"
-            else
-              echo "❌ アプリケーション起動失敗"
-            fi
+            pgrep -f "ts-node.*app.ts" && echo "起動成功" || echo "起動失敗"
