@@ -76,3 +76,5 @@ jobs:
             nohup npx ts-node --transpile-only app.ts > app.log 2>&1 &
             sleep 3
             pgrep -f "ts-node.*app.ts" && echo "起動成功" || echo "起動失敗"
+
+            
