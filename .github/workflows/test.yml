@@ -66,21 +66,15 @@ jobs:
             git remote set-url origin https://github.com/DaisukeKikukawa/Forkup.git
             git pull origin main
             npm ci
-
-            npm run build
-
-            cp -r views dist/
-            cp -r public dist/
-
             npx sequelize-cli db:migrate
             pkill -f "ts-node.*app.ts" || true
-            pkill -f "node.*dist/app.js" || true
 
-            nohup node dist/app.js > app.log 2>&1 &
+            # 以前と同じ方法で実行
+            nohup npx ts-node --transpile-only app.ts > app.log 2>&1 &
 
             sleep 3
-            if pgrep -f "node.*dist/app.js" > /dev/null; then
-              echo "アプリケーション起動成功"
+            if pgrep -f "ts-node.*app.ts" > /dev/null; then
+              echo "✅ アプリケーション起動成功"
             else
-              echo "アプリケーション起動失敗"
+              echo "❌ アプリケーション起動失敗"
             fi
