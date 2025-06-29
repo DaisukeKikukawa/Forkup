@@ -69,21 +69,18 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           timeout: 60s
-          command_timeout: 5m
+          command_timeout: 3m
           script: |
             cd /home/ec2-user/Forkup/Phase7/library-system
             npm ci
             npx sequelize-cli db:migrate
-            pkill -f "ts-node.*app.ts" || true
 
-            setsid nohup npx ts-node --transpile-only app.ts > app.log 2>&1 < /dev/null &
+            # PM2でアプリケーション管理
+            npx pm2 stop library-app || true
+            npx pm2 delete library-app || true
+            npx pm2 start "npx ts-node --transpile-only app.ts" --name library-app
 
-            sleep 2
+            # PM2の状態確認
+            npx pm2 list
 
-            if pgrep -f "ts-node.*app.ts" > /dev/null; then
-              echo "起動成功"
-            else
-              echo "起動確認中（バックグラウンドで起動している可能性あり）"
-            fi
-
-            exit 0
+            echo "デプロイ完了"
