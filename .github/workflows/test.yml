@@ -72,15 +72,17 @@ jobs:
           command_timeout: 3m
           script: |
             cd /home/ec2-user/Forkup/Phase7/library-system
+
+            sed -i 's|__dirname + "/../views"|__dirname + "/views"|g' app.ts
+            sed -i 's|__dirname + "/../public/"|__dirname + "/public/"|g' app.ts
+
             npm ci
             npx sequelize-cli db:migrate
 
-            # PM2でアプリケーション管理
             npx pm2 stop library-app || true
             npx pm2 delete library-app || true
             npx pm2 start "npx ts-node --transpile-only app.ts" --name library-app
 
-            # PM2の状態確認
             npx pm2 list
 
             echo "デプロイ完了"
