@@ -53,7 +53,7 @@ function myLogger(req: express.Request, res: express.Response, next: express.Nex
 app.use("/", authRouter);
 app.use("/", requireAuth, postRoutes);
 app.use("/", requireAuth, bookRouter);
-app.use("/", requireAuth, userRouter);
+app.use("/", userRouter);
 app.use("/", requireAuth, lendingRouter);
 app.use("/", requireAuth, returnRouter);
 app.use("/", requireAuth, reservationRouter);
