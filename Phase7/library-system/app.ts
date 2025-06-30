@@ -9,7 +9,7 @@ import passportConfig from "./config/passport";
 import methodOverride from "method-override";
 import postRoutes from "./routes/post";
 import authRouter from "./routes/auth";
-// import { requireAuth } from "./routes/auth";
+import { requireAuth } from "./routes/auth";
 import bookRouter from "./routes/book";
 import userRouter from "./routes/user";
 import lendingRouter from "./routes/lending";
@@ -51,12 +51,12 @@ function myLogger(req: express.Request, res: express.Response, next: express.Nex
 
 //ルーティングの設定
 app.use("/", authRouter);
-app.use("/", postRoutes);
-app.use("/", bookRouter);
-app.use("/", userRouter);
-app.use("/", lendingRouter);
-app.use("/", returnRouter);
-app.use("/", reservationRouter);
+app.use("/", requireAuth, postRoutes);
+app.use("/", requireAuth, bookRouter);
+app.use("/", requireAuth, userRouter);
+app.use("/", requireAuth, lendingRouter);
+app.use("/", requireAuth, returnRouter);
+app.use("/", requireAuth, reservationRouter);
 
 app.listen(3000)
 console.log("サーバー起動")
