@@ -5,12 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>library-system</title>
+  <link rel="stylesheet" href="/common.css">
   <link rel="stylesheet" href="account/account.index.css">
 </head>
 
 <body>
   <div>
     <main role="main">
+      <%- include('../partials/navigation') %>
       <div>
         <p>ID:<%= user.id %></p>
         <p>名前:<%= user.name %></p>

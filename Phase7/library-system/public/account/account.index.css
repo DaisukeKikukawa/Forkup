@@ -58,3 +58,13 @@ input[type="submit"]:hover {
 .logout {
   background-color: #dc3545 !important;
 }
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  font-size: 14px;
+}

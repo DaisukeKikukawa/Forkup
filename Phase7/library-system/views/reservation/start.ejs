@@ -5,11 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>library-system</title>
+  <link rel="stylesheet" href="/common.css">
   <link rel="stylesheet" href="/reservation/start.css">
 </head>
 
 <body>
   <div class="container">
+    <%- include('../partials/navigation') %>
     <h1>本の予約</h1>
     <% if (typeof error !=='undefined' ) { %>
       <div class="error-message">

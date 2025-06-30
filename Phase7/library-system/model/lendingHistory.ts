@@ -66,7 +66,7 @@ LendingHistory.init(
     },
   },
   {
-    tableName: "lending_history",
+    tableName: "lending_records",
     sequelize,
     underscored: true,
     timestamps: false,
